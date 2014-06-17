@@ -1,8 +1,21 @@
-<!DOCTYPE html>
-<html>
-	<title>League Clicker</title>
-	<body>
-	<h1> Hi Welcome to League Clicker </h1>
-	</body>
-</html>
+<head>
+<title>League Clicker</title>
+</head>
 
+<body>
+
+<h1>LeagueClicker</h1>
+
+<button onclick="killFuckingMinion()">Kill a fucking minion</button>
+<div><span>Fucking minions killed: </span><span id="wut">0</span><div>
+
+<script>
+var minionsKilled = 0;
+function killFuckingMinion() {
+	minionsKilled += 1;
+	document.getElementById("wut").innerHTML = minionsKilled;
+}
+</script>
+
+</body>
+</html>
