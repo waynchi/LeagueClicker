@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LeagueClicker</title>
+</head>
+
+<body>
+
+<h1>LeagueClicker</h1>
+
+<button onclick="killFuckingMinion()">Kill a fucking minion</button>
+<div><span>Fucking minions killed: </span><span id="wut">0</span><div>
+
+<script>
+var minionsKilled = 0;
+function killFuckingMinion() {
+	minionsKilled += 1;
+	document.getElementById("wut").innerHTML = minionsKilled;
+}
+</script>
+
+</body>
+</html>
