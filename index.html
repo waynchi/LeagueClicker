@@ -6,12 +6,12 @@
 
 <h1>LeagueClicker</h1>
 
-<button onclick="killFuckingMinion()">Kill a fucking minion</button>
-<div><span>Fucking minions killed: </span><span id="wut">0</span><div>
+<button onclick="killMinion()">Kill a minion</button>
+<div><span>minions killed: </span><span id="wut">0</span><div>
 
 <script>
 var minionsKilled = 0;
-function killFuckingMinion() {
+function killMinion() {
 	minionsKilled += 1;
 	document.getElementById("wut").innerHTML = minionsKilled;
 }
