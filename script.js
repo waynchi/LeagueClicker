@@ -4,8 +4,7 @@ $(document).ready(function() {
 });
 
 //Variables
-var myVar = setInterval(function(){updateGold();updateButtons()},1000);
-// var myVar = setInterval(function(){updateGold()},1000);
+var myVar = setInterval(function(){incrementGold();updateButtons()},1000);
 var gold = 0;
 var minionsKilled = 0;
 var minionKillGold = 1;
@@ -25,6 +24,7 @@ function killMinion() {
 	gold += minionKillGold;
 	document.getElementById("Gold").innerHTML = gold.toFixed(1);
 	document.getElementById("MinionsKilledCount").innerHTML = minionsKilled;
+	updateButtons();
 	if(minionsKilled >= 10 && !buyMeleeMinionBlockTrue)
 	{	
 		buyMeleeMinionBlockTrue = true;
@@ -68,7 +68,7 @@ function showBuyMeleeMinion() {
 	//creating Buttons and Text
 	var buyMinionBtn = document.createElement("Button");
 	var buyMinionTxt = document.createTextNode("Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold");
-	var minionOwnedTxt = document.createTextNode("Minions Owned: ");
+	var minionOwnedTxt = document.createTextNode("Melee Minions Owned: ");
 	var minionAmtTxt = document.createTextNode(meleeMinionsOwned);
 	//appending items together
 	buyMinionBtn.appendChild(buyMinionTxt);
@@ -79,7 +79,8 @@ function showBuyMeleeMinion() {
 	buyMinionBtn.id = "buyMeleeMinion";
 	//setting onclick
 	buyMinionBtn.onclick = function(){buyMeleeMinion()};
-	
+	//disable button
+	buyMinionBtn.disabled = true;
 }
 
 //create element to Buy Caster Minion
@@ -87,7 +88,7 @@ function showBuyCasterMinion() {
 	//creating Buttons and Text
 	var buyMinionBtn = document.createElement("Button");
 	var buyMinionTxt = document.createTextNode("Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold");
-	var minionOwnedTxt = document.createTextNode("Minions Owned: ");
+	var minionOwnedTxt = document.createTextNode("Caster Minions Owned: ");
 	var minionAmtTxt = document.createTextNode(casterMinionsOwned);
 	//appending items together
 	buyMinionBtn.appendChild(buyMinionTxt);
@@ -98,17 +99,32 @@ function showBuyCasterMinion() {
 	buyMinionBtn.id = "buyCasterMinion";
 	//setting onclick
 	buyMinionBtn.onclick = function(){buyCasterMinion()};
+	//disable button
+	buyMinionBtn.disabled = true;
 }
 
 function updateButtons() {
+	// Update Melee Minion Button
 	if (buyMeleeMinionBlockTrue)
+	{
 		document.getElementById("buyMeleeMinion").innerHTML = "Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold";
+		if (gold >= meleeMinionCost)
+			document.getElementById("buyMeleeMinion").disabled = false;
+		else
+			document.getElementById("buyMeleeMinion").disabled = true;
+	}
+	// Update Caster Minion Button
 	if (buyCasterMinionBlockTrue)
+	{
 		document.getElementById("buyCasterMinion").innerHTML = "Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold";
-
+		if (gold >= casterMinionCost)
+			document.getElementById("buyCasterMinion").disabled = false;
+		else
+			document.getElementById("buyCasterMinion").disabled = true;
+	}
 }
 
-function updateGold() {
+function incrementGold() {
 	gold += meleeMinionsOwned*meleeMinionProduction;
 	gold += casterMinionsOwned*casterMinionProduction;
     document.getElementById("Gold").innerHTML = gold.toFixed(1);
@@ -132,7 +148,7 @@ function tab(tab) {
 function wut()
 {
 	for (var i = 0; i < 1000; i++) {
-		updateGold();
+		incrementGold();
 		updateButtons();
 	};
 }
