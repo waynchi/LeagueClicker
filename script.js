@@ -1,3 +1,8 @@
+// Initialization
+$(document).ready(function() {
+	tab('tab1'); // switch to first tab
+});
+
 //Variables
 var myVar = setInterval(function(){updateGold()},1000);
 var gold = 0;
@@ -24,4 +29,17 @@ function buyMinion() {
 function updateGold() {
 	gold += minionsOwned*0.1;
     document.getElementById("Gold").innerHTML = gold.toFixed(1);
+}
+
+function tab(tab) {
+	document.getElementById('tab1').style.display = 'none';
+	document.getElementById('tab2').style.display = 'none';
+	document.getElementById('tab3').style.display = 'none';
+	document.getElementById('tab4').style.display = 'none';
+	document.getElementById('li_tab1').setAttribute("class", "");
+	document.getElementById('li_tab2').setAttribute("class", "");
+	document.getElementById('li_tab3').setAttribute("class", "");
+	document.getElementById('li_tab4').setAttribute("class", "");
+	document.getElementById(tab).style.display = 'block';
+	document.getElementById('li_'+tab).setAttribute("class", "active");
 }
