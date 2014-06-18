@@ -4,11 +4,17 @@ $(document).ready(function() {
 });
 
 //Variables
-var myVar = setInterval(function(){updateGold()},1000);
+var myVar = setInterval(function(){updateGold();updateButtons()},1000);
+// var myVar = setInterval(function(){updateGold()},1000);
 var gold = 0;
 var minionsKilled = 0;
+var minionKillGold = 1;
 var meleeMinionsOwned = 0;
+var meleeMinionCost = 10;
+var meleeMinionProduction = 0.1;
 var casterMinionsOwned = 0;
+var casterMinionCost = 50;
+var casterMinionProduction = 0.7;
 
 //Variables that see if Element has been created
 var buyMeleeMinionBlockTrue = false;
@@ -16,7 +22,7 @@ var buyCasterMinionBlockTrue = false;
 
 function killMinion() {
 	minionsKilled += 1;
-	gold += 1;
+	gold += minionKillGold;
 	document.getElementById("Gold").innerHTML = gold.toFixed(1);
 	document.getElementById("MinionsKilledCount").innerHTML = minionsKilled;
 	if(minionsKilled >= 10 && !buyMeleeMinionBlockTrue)
@@ -28,14 +34,16 @@ function killMinion() {
 
 //when Buy Melee Minion Button is clicked
 function buyMeleeMinion() {
-	if(gold >=10)
+	if(gold >= meleeMinionCost)
 	{
-		meleeMinionsOwned +=1;
-		gold -= 10;
+		meleeMinionsOwned += 1;
+		gold -= meleeMinionCost;
 		document.getElementById("Gold").innerHTML = gold.toFixed(1);
 		document.getElementById("MeleeMinionsOwned").innerHTML = meleeMinionsOwned;
+		meleeMinionCost *= 1.1;
+		updateButtons();
 	}
-	if(meleeMinionsOwned >= 2 && !buyCasterMinionBlockTrue)
+	if(!buyCasterMinionBlockTrue && meleeMinionsOwned >= 2 )
 	{
 		buyCasterMinionBlockTrue = true;
 		showBuyCasterMinion();
@@ -44,12 +52,14 @@ function buyMeleeMinion() {
 
 //when Buy Caster Minion Button is clicked
 function buyCasterMinion() {
-	if(gold >= 50)
+	if(gold >= casterMinionCost)
 	{
-		casterMinionsOwned +=1;
-		gold -= 50;
+		casterMinionsOwned += 1;
+		gold -= casterMinionCost;
 		document.getElementById("Gold").innerHTML = gold.toFixed(1);
 		document.getElementById("CasterMinionsOwned").innerHTML = casterMinionsOwned;
+		casterMinionCost *= 1.1;
+		updateButtons();
 	}
 }
 
@@ -57,7 +67,7 @@ function buyCasterMinion() {
 function showBuyMeleeMinion() {
 	//creating Buttons and Text
 	var buyMinionBtn = document.createElement("Button");
-	var buyMinionTxt = document.createTextNode("Buy Melee Minion");
+	var buyMinionTxt = document.createTextNode("Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold");
 	var minionOwnedTxt = document.createTextNode("Minions Owned: ");
 	var minionAmtTxt = document.createTextNode(meleeMinionsOwned);
 	//appending items together
@@ -76,7 +86,7 @@ function showBuyMeleeMinion() {
 function showBuyCasterMinion() {
 	//creating Buttons and Text
 	var buyMinionBtn = document.createElement("Button");
-	var buyMinionTxt = document.createTextNode("Buy Caster Minion");
+	var buyMinionTxt = document.createTextNode("Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold");
 	var minionOwnedTxt = document.createTextNode("Minions Owned: ");
 	var minionAmtTxt = document.createTextNode(casterMinionsOwned);
 	//appending items together
@@ -90,9 +100,17 @@ function showBuyCasterMinion() {
 	buyMinionBtn.onclick = function(){buyCasterMinion()};
 }
 
+function updateButtons() {
+	if (buyMeleeMinionBlockTrue)
+		document.getElementById("buyMeleeMinion").innerHTML = "Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold";
+	if (buyCasterMinionBlockTrue)
+		document.getElementById("buyCasterMinion").innerHTML = "Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold";
+
+}
+
 function updateGold() {
-	gold += meleeMinionsOwned*0.1;
-	gold += casterMinionsOwned*0.7;
+	gold += meleeMinionsOwned*meleeMinionProduction;
+	gold += casterMinionsOwned*casterMinionProduction;
     document.getElementById("Gold").innerHTML = gold.toFixed(1);
 }
 
@@ -107,4 +125,14 @@ function tab(tab) {
 	document.getElementById('li_tab4').setAttribute("class", "");
 	document.getElementById(tab).style.display = 'block';
 	document.getElementById('li_'+tab).setAttribute("class", "active");
+}
+
+//Debug function
+//Simulates 1000 seconds
+function wut()
+{
+	for (var i = 0; i < 1000; i++) {
+		updateGold();
+		updateButtons();
+	};
 }
