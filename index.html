@@ -8,13 +8,29 @@
 
 <body>
 
-<h1>League Clicker</h1>
+	<h1>League Clicker</h1>
 
-<button id="minion" onclick="killMinion()">
-<div><span>Last Hit a Minion</span>
-</button>
-<span>Creep Score: </span>
-<span id="MinionsKilledCount">0</span><div>
+	<div>
+		<span>Gold: </span>
+		<span id="Gold">0</span>
+	</div>
+	
+	<div>
+		<button id="minion" onclick="killMinion()">
+			<span>Last Hit a Minion</span>
+		</button>
+		<span>Creep Score: </span>
+		<span id="MinionsKilledCount" onchange="updateGold">0</span>
+	</div>
+
+	<div>
+		<button id="buyMinion" onclick="buyMinion()">
+			<div><span>Buy a Minion </span> </div>
+		</button>
+		<span> Minions owned: </span> 
+		<span id="MinionsOwned">0</span>
+	</div>
+
 
 </body>
 </html>
