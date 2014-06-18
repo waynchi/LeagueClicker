@@ -20,45 +20,42 @@ function killMinion() {
 	if(minionsKilled >= 10 && !buyMinionBlockTrue)
 	{	
 		buyMinionBlockTrue = true;
-		showBuyMinion();
+		showBuyMeleeMinion();
 	}
 }
 
-function buyMinion() {
+function buyMeleeMinion() {
 	if(gold >=10)
 	{
 		minionsOwned +=1;
 		gold -= 10;
 		document.getElementById("Gold").innerHTML = gold.toFixed(1);
-		document.getElementById("MinionsOwned").innerHTML = minionsOwned;
+		document.getElementById("MeleeMinionsOwned").innerHTML = minionsOwned;
 	}
 }
 
-//create element to Buy Minion
-function showBuyMinion() {
+//create element to Buy Melee Minion
+function showBuyMeleeMinion() {
 	//creating Buttons and Text
-	var buyMinionBlockDiv = document.createElement("Div");
 	var buyMinionBtn = document.createElement("Button");
 	var buyMinionTxt = document.createTextNode("Buy Minion");
-	var buyMinionTextSpan = document.createElement("Span");
 	var minionOwnedTxt = document.createTextNode("Minions Owned: ");
-	var minionAmtSpan = document.createElement("Span");
 	var minionAmtTxt = document.createTextNode(minionsOwned);
 	//appending items together
 	buyMinionBtn.appendChild(buyMinionTxt);
-	buyMinionBlockDiv.appendChild(buyMinionBtn);
-	buyMinionTextSpan.appendChild(minionOwnedTxt);
-	minionAmtSpan.appendChild(minionAmtTxt);
-	buyMinionTextSpan.appendChild(minionAmtSpan);
-	buyMinionBlockDiv.appendChild(buyMinionTextSpan);
-	document.body.appendChild(buyMinionBlockDiv);
+	document.getElementById("MeleeMinionButton").appendChild(buyMinionBtn);
+	document.getElementById("MeleeMinionsText").appendChild(minionOwnedTxt);
+	document.getElementById("MeleeMinionsOwned").appendChild(minionAmtTxt);
 	//setting ID
-	buyMinionBlockDiv.id = "buyMinionBlock";
-	minionAmtSpan.id = "MinionsOwned";
 	buyMinionBtn.id = "buyMinion";
 	//setting onclick
-	buyMinionBtn.onclick = function(){buyMinion()};
+	buyMinionBtn.onclick = function(){buyMeleeMinion()};
 	
+}
+
+//create element to Buy Caster Minion
+function showBuyCasterMinion() {
+	//
 }
 
 function updateGold() {
