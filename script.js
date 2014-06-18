@@ -40,7 +40,7 @@ function buyMeleeMinion() {
 		gold -= meleeMinionCost;
 		document.getElementById("Gold").innerHTML = gold.toFixed(1);
 		document.getElementById("MeleeMinionsOwned").innerHTML = meleeMinionsOwned;
-		meleeMinionCost *= 1.1;
+		meleeMinionCost = 10 * Math.pow(1.1,meleeMinionsOwned);
 		updateButtons();
 	}
 	if(!buyCasterMinionBlockTrue && meleeMinionsOwned >= 2 )
@@ -58,7 +58,7 @@ function buyCasterMinion() {
 		gold -= casterMinionCost;
 		document.getElementById("Gold").innerHTML = gold.toFixed(1);
 		document.getElementById("CasterMinionsOwned").innerHTML = casterMinionsOwned;
-		casterMinionCost *= 1.1;
+		casterMinionCost = 50 * Math.pow(1.1,casterMinionsOwned);
 		updateButtons();
 	}
 }
