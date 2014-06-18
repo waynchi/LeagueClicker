@@ -7,7 +7,7 @@ var minionsOwned = 0;
 function killMinion() {
 	minionsKilled += 1;
 	gold += 1;
-	document.getElementById("Gold").innerHTML = gold;
+	document.getElementById("Gold").innerHTML = gold.toFixed(1);
 	document.getElementById("MinionsKilledCount").innerHTML = minionsKilled;
 }
 
@@ -16,12 +16,12 @@ function buyMinion() {
 	{
 		minionsOwned +=1;
 		gold -= 10;
-		document.getElementById("Gold").innerHTML = gold;
+		document.getElementById("Gold").innerHTML = gold.toFixed(1);
 		document.getElementById("MinionsOwned").innerHTML = minionsOwned;
 	}
 }
 
 function updateGold() {
 	gold += minionsOwned*0.1;
-    document.getElementById("Gold").innerHTML = gold;
+    document.getElementById("Gold").innerHTML = gold.toFixed(1);
 }
