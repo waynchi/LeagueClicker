@@ -36,7 +36,7 @@ var minionData = [{
 		buttonClickFunction: function() {buyCasterMinion();},
 		buttonSpanId: '#CasterMinionButton',
 		textSpanId: '#CasterMinionsText',
-		ownedSpanId: '#CasterMinionsOwned',
+		ownedSpanId: '#CasterMinionOwned',
 		minionsOwned: 0,
 		baseCost: 50,
 		minionCost: 50,
@@ -47,28 +47,13 @@ var minionData = [{
 		buttonClickFunction: function() {buySiegeMinion();},
 		buttonSpanId: '#SiegeMinionButton',
 		textSpanId: '#SiegeMinionsText',
-		ownedSpanId: '#SiegeMinionsOwned',
+		ownedSpanId: 'SiegeMinionOwned',
 		minionsOwned: 0,
 		baseCost: 200,
 		minionCost: 200,
 		minionProduction: 5
 	}]
 
-//melee minions
-var meleeMinionsOwned = 0;
-var baseMeleeCost = 10;
-var meleeMinionCost = 10;
-var meleeMinionProduction = 0.1;
-//caster minions
-var baseCasterCost = 50;
-var casterMinionsOwned = 0;
-var casterMinionCost = 50;
-var casterMinionProduction = 0.7;
-//siege minions
-var siegeMinionsOwned = 0;
-var baseSiegeCost = 200;
-var siegeMinionCost = 200;
-var siegeMinionProduction = 5;
 //champions
 var championsOwned = 0;
 var baseChampionCost = 1000;
@@ -122,17 +107,17 @@ function buyChampion() {
 
 //Called when Buy Melee Minion Button is clicked
 function buyMeleeMinion() {
-	if(gold >= meleeMinionCost)
+	if(gold >= minionData[minionEnum.MELEE].minionCost)
 	{
-		meleeMinionsOwned += 1;
-		gold -= meleeMinionCost;
+		minionData[minionEnum.MELEE].minionsOwned += 1;
+		gold -= minionData[minionEnum.MELEE].minionCost;
 		$("#Gold").text(gold.toFixed(1));
-		$("#MeleeMinionsOwned").text(meleeMinionsOwned);
-		meleeMinionCost = baseMeleeCost * Math.pow(1.1,meleeMinionsOwned);
+		$("#MeleeMinionsOwned").text(minionData[minionEnum.MELEE].minionsOwned);
+		minionData[minionEnum.MELEE].minionCost = minionData[minionEnum.MELEE].baseCost * Math.pow(1.1,minionData[minionEnum.MELEE].minionsOwned);
 		updateButtons();
 	}
 	//Causes caster minions to show up
-	if(!buyCasterMinionBlockTrue && meleeMinionsOwned >= 2 )
+	if(!buyCasterMinionBlockTrue && minionData[minionEnum.MELEE].minionsOwned >= 2 )
 	{
 		buyCasterMinionBlockTrue = true;
 		showMinionBlock(minionEnum.CASTER);
@@ -141,17 +126,17 @@ function buyMeleeMinion() {
 
 //Called when Buy Caster Minion Button is clicked
 function buyCasterMinion() {
-	if(gold >= casterMinionCost)
+	if(gold >= minionData[minionEnum.CASTER].minionCost)
 	{
-		casterMinionsOwned += 1;
-		gold -= casterMinionCost;
+		minionData[minionEnum.CASTER].minionsOwned += 1;
+		gold -= minionData[minionEnum.CASTER].minionCost;
 		$("#Gold").text(gold.toFixed(1));
-		$("#CasterMinionsOwned").text(casterMinionsOwned);
-		casterMinionCost = baseCasterCost * Math.pow(1.1,casterMinionsOwned);
+		$("#CasterMinionOwned").text(minionData[minionEnum.CASTER].minionsOwned);
+		minionData[minionEnum.CASTER].minionCost = minionData[minionEnum.CASTER].baseCost * Math.pow(1.1,minionData[minionEnum.CASTER].minionsOwned);
 		updateButtons();
 	}
 	//Causes siege minions to show up
-	if(!buySiegeMinionBlockTrue && casterMinionsOwned >= 2)
+	if(!buySiegeMinionBlockTrue && minionData[minionEnum.CASTER].minionsOwned >= 2)
 	{
 		buySiegeMinionBlockTrue = true;
 		showMinionBlock(minionEnum.SIEGE);
@@ -160,17 +145,17 @@ function buyCasterMinion() {
 
 //Called when Buy Siege Minion Button is clicked
 function buySiegeMinion() {
-	if(gold >= siegeMinionCost)
+	if(gold >= minionData[minionEnum.SIEGE].minionCost)
 	{
-		siegeMinionsOwned += 1;
-		gold -= siegeMinionCost;
+		minionData[minionEnum.SIEGE].minionsOwned += 1;
+		gold -= minionData[minionEnum.SIEGE].minionCost;
 		$("#Gold").text(gold.toFixed(1));
-		$("#SiegeMinionsOwned").text(siegeMinionsOwned);
-		siegeMinionCost = baseSiegeCost * Math.pow(1.1, siegeMinionsOwned);
+		$("#SiegeMinionOwned").text(minionData[minionEnum.SIEGE].minionsOwned);
+		minionData[minionEnum.SIEGE].minionCost = minionData[minionEnum.SIEGE].baseCost * Math.pow(1.1, minionData[minionEnum.SIEGE].minionsOwned);
 		updateButtons();
 	}
 	//Causes champions to show up
-	if(!buyChampionBlockTrue && siegeMinionsOwned >= 2)
+	if(!buyChampionBlockTrue && minionData[minionEnum.SIEGE].minionsOwned >= 2)
 	{
 		buyChampionBlockTrue = true;
 		showBuyChampion();
@@ -226,20 +211,20 @@ function updateButtons() {
 	// Update Melee Minion Button
 	if (buyMeleeMinionBlockTrue)
 	{
-		$("#buyMeleeMinion").text("Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold");
-		$("#buyMeleeMinion").attr("disabled", (gold < meleeMinionCost) ? true:false);
+		$("#buyMeleeMinion").text("Buy Melee Minion for " + minionData[minionEnum.MELEE].minionCost.toFixed(0) + " gold");
+		$("#buyMeleeMinion").attr("disabled", (gold < minionData[minionEnum.MELEE].minionCost) ? true:false);
 	}
 	// Update Caster Minion Button
 	if (buyCasterMinionBlockTrue)
 	{
-		$("#buyCasterMinion").text("Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold");
-		$("#buyCasterMinion").attr("disabled", (gold < casterMinionCost) ? true:false);
+		$("#buyCasterMinion").text("Buy Caster Minion for " + minionData[minionEnum.CASTER].minionCost.toFixed(0) + " gold");
+		$("#buyCasterMinion").attr("disabled", (gold < minionData[minionEnum.CASTER].minionCost) ? true:false);
 	}
 	// Update Siege Minion Button
 	if (buySiegeMinionBlockTrue)
 	{
-		$("#buySiegeMinion").text("Buy Siege Minion for " + siegeMinionCost.toFixed(0) + " gold");
-		$("#buySiegeMinion").attr("disabled", (gold < siegeMinionCost) ? true:false);
+		$("#buySiegeMinion").text("Buy Siege Minion for " + minionData[minionEnum.SIEGE].minionCost.toFixed(0) + " gold");
+		$("#buySiegeMinion").attr("disabled", (gold < minionData[minionEnum.SIEGE].minionCost) ? true:false);
 	}
 	// Update Buy Champion Button
 	if (buyChampionBlockTrue)
@@ -250,9 +235,9 @@ function updateButtons() {
 }
 
 function incrementGold() {
-	gold += meleeMinionsOwned*meleeMinionProduction;
-	gold += casterMinionsOwned*casterMinionProduction;
-	gold += siegeMinionsOwned*siegeMinionProduction;
+	gold += minionData[minionEnum.MELEE].minionsOwned*minionData[minionEnum.MELEE].minionProduction;
+	gold += minionData[minionEnum.CASTER].minionsOwned*minionData[minionEnum.CASTER].minionProduction;
+	gold += minionData[minionEnum.SIEGE].minionsOwned*minionData[minionEnum.SIEGE].minionProduction;
 	$("#Gold").text(gold.toFixed(1));
 }
 
