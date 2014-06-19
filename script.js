@@ -208,8 +208,8 @@ function updateButtons() {
 	// Update Buy Champion Button
 	if (buyChampionBlockTrue)
 	{
-		//$("#buyChampionButton").text("Buy Champion for " + championCost.toFixed(0) + " gold");
-		console.log("test");
+		$("#buyChampionButton").text("Buy Champion for " + championCost.toFixed(0) + " gold");
+		console.log(championCost);
 		$("#buyChampionButton").attr("disabled", (gold < championCost) ? true:false);
 	}
 }
