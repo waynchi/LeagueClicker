@@ -6,23 +6,33 @@ $(document).ready(function() {
 //Variables
 var myVar = setInterval(function(){incrementGold();updateButtons()},1000);
 var gold = 0;
+//minions
 var minionsKilled = 0;
 var minionKillGold = 1;
+//melee minions
 var meleeMinionsOwned = 0;
 var baseMeleeCost = 10;
 var meleeMinionCost = 10;
 var meleeMinionProduction = 0.1;
+//caster minions
 var baseCasterCost = 50;
 var casterMinionsOwned = 0;
 var casterMinionCost = 50;
 var casterMinionProduction = 0.7;
+//siege minions
 var siegeMinionsOwned = 0;
 var baseSiegeCost = 200;
 var siegeMinionCost = 200;
 var siegeMinionProduction = 5;
+//champions
+var championsOwned = 0;
+var baseChampionCost = 1000;
+var championCost = 0;
 
 
 //Variables that see if Element has been created
+var buyChampionBlockTrue = true;
+var killMinionBlockTrue = false;
 var buyMeleeMinionBlockTrue = false;
 var buyCasterMinionBlockTrue = false;
 var buySiegeMinionBlockTrue = false;
@@ -31,13 +41,36 @@ function killMinion() {
 	minionsKilled += 1;
 	gold += minionKillGold;
 	$("#Gold").text(gold.toFixed(1));
-	$("MinionsKilledCount").text(minionsKilled);
+	$("#MinionsKilledCount").text(minionsKilled);
 	updateButtons();
 	if(!buyMeleeMinionBlockTrue && minionsKilled >= 10)
 	{	
 		buyMeleeMinionBlockTrue = true;
 		showBuyMeleeMinion();
 	}
+}
+
+//Called when Buy A Champion
+function buyChampion() {
+	if(championsOwned == 0)
+	{
+		championCost = 0;
+	}
+	if(gold >= championCost)
+	{
+		championsOwned ++;
+		gold -= championCost;
+		$("#Gold").text(gold.toFixed(1));
+		//$("#
+		//for later when we implement individual champs
+		championCost = baseChampionCost * Math.pow(championsOwned,2);
+		if(!killMinionBlockTrue)
+		{
+			showKillMinion();
+			killMinionBlockTrue = !killMinionBlockTrue;
+		}
+	}
+	
 }
 
 //Called when Buy Melee Minion Button is clicked
@@ -91,6 +124,22 @@ function buySiegeMinion() {
 	}
 	//Causes champions to show up
 }
+
+//Create element to Kill Minion
+function showKillMinion() {
+	// Create Button
+	var buttonText = "Last Hit an Enemy Minion";
+	$('<button/>', {
+		id: 'minion',
+		text: buttonText,
+		click: function() {killMinion();},
+		disabled: false
+	}).appendTo('#KillMinionButton')
+	//create text
+	$('#KillMinionText').text("Minions Killed: ");
+	$('#MinionsKilledCount').text('0');
+}
+	
 
 //Create element to Buy Melee Minion
 function showBuyMeleeMinion() {
@@ -155,6 +204,10 @@ function updateButtons() {
 	{
 		$("#buySiegeMinion").text("Buy Siege Minion for " + siegeMinionCost.toFixed(0) + " gold");
 		$("#buySiegeMinion").attr("disabled", (gold < siegeMinionCost) ? true:false);
+	}
+	// Update Buy Champion Button
+	if (buyChampionBlockTrue)
+	{
 	}
 }
 
