@@ -100,6 +100,8 @@ function buyChampion() {
 	if(championsOwned == 0)
 	{
 		championCost = 0;
+		$("#buyChampion").remove();
+		buyChampionBlockTrue = false;
 	}
 	if(gold >= championCost)
 	{
@@ -168,7 +170,26 @@ function buySiegeMinion() {
 		updateButtons();
 	}
 	//Causes champions to show up
+	if(!buyChampionBlockTrue && siegeMinionsOwned >= 2)
+	{
+		buyChampionBlockTrue = true;
+		showBuyChampion();
+	}
 }
+
+//Create element to Buy Champion
+function showBuyChampion() {
+	//Create Button
+	var buttonText = "Buy Champion for " + championCost.toFixed(0) + " gold";
+	$('<button/>', {
+		id: 'buyChampion',
+		text: buttonText,
+		click: function() {buyChampion();},
+		disabled: (gold < championCost) ? true:false
+	}).appendTo('#buyChampionButton')
+}
+		
+		
 
 //Create element to Kill Minion
 function showKillMinion() {
@@ -224,7 +245,6 @@ function updateButtons() {
 	if (buyChampionBlockTrue)
 	{
 		$("#buyChampion").text("Buy Champion for " + championCost.toFixed(0) + " gold");
-		//console.log(championCost);
 		$("#buyChampion").attr("disabled", (gold < championCost) ? true:false);
 	}
 }
