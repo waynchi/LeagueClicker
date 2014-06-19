@@ -31,7 +31,7 @@ function killMinion() {
 	minionsKilled += 1;
 	gold += minionKillGold;
 	$("#Gold").text(gold.toFixed(1));
-	$("MinionsKilledCount").text(minionsKilled);
+	$("#MinionsKilledCount").text(minionsKilled);
 	updateButtons();
 	if(!buyMeleeMinionBlockTrue && minionsKilled >= 10)
 	{	
