@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 
 //Variables
-var myVar = setInterval(function(){incrementGold();updateButtons()},1000);
+var myVar = setInterval(function(){incrementGold();updateButtons();},1000);
 var gold = 0;
 //minions
 var minionsKilled = 0;
