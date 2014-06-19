@@ -30,10 +30,10 @@ var buySiegeMinionBlockTrue = false;
 function killMinion() {
 	minionsKilled += 1;
 	gold += minionKillGold;
-	document.getElementById("Gold").innerHTML = gold.toFixed(1);
-	document.getElementById("MinionsKilledCount").innerHTML = minionsKilled;
+	$("#Gold").text(gold.toFixed(1));
+	$("MinionsKilledCount").text(minionsKilled);
 	updateButtons();
-	if(minionsKilled >= 10 && !buyMeleeMinionBlockTrue)
+	if(!buyMeleeMinionBlockTrue && minionsKilled >= 10)
 	{	
 		buyMeleeMinionBlockTrue = true;
 		showBuyMeleeMinion();
@@ -46,8 +46,8 @@ function buyMeleeMinion() {
 	{
 		meleeMinionsOwned += 1;
 		gold -= meleeMinionCost;
-		document.getElementById("Gold").innerHTML = gold.toFixed(1);
-		document.getElementById("MeleeMinionsOwned").innerHTML = meleeMinionsOwned;
+		$("#Gold").text(gold.toFixed(1));
+		$("#MeleeMinionsOwned").text(meleeMinionsOwned);
 		meleeMinionCost = baseMeleeCost * Math.pow(1.1,meleeMinionsOwned);
 		updateButtons();
 	}
@@ -65,8 +65,8 @@ function buyCasterMinion() {
 	{
 		casterMinionsOwned += 1;
 		gold -= casterMinionCost;
-		document.getElementById("Gold").innerHTML = gold.toFixed(1);
-		document.getElementById("CasterMinionsOwned").innerHTML = casterMinionsOwned;
+		$("#Gold").text(gold.toFixed(1));
+		$("#CasterMinionsOwned").text(casterMinionsOwned);
 		casterMinionCost = baseCasterCost * Math.pow(1.1,casterMinionsOwned);
 		updateButtons();
 	}
@@ -84,8 +84,8 @@ function buySiegeMinion() {
 	{
 		siegeMinionsOwned += 1;
 		gold -= siegeMinionCost;
-		document.getElementById("Gold").innerHTML = gold.toFixed(1);
-		document.getElementById("SiegeMinionsOwned").innerHTML = siegeMinionsOwned;
+		$("#Gold").text(gold.toFixed(1));
+		$("#SiegeMinionsOwned").text(siegeMinionsOwned);
 		siegeMinionCost = baseSiegeCost * Math.pow(1.1, siegeMinionsOwned);
 		updateButtons();
 	}
@@ -94,22 +94,33 @@ function buySiegeMinion() {
 
 //create element to Buy Melee Minion
 function showBuyMeleeMinion() {
-	//creating Buttons and Text
-	var buyMinionBtn = document.createElement("Button");
-	var buyMinionTxt = document.createTextNode("Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold");
-	var minionOwnedTxt = document.createTextNode("Melee Minions Owned: ");
-	var minionAmtTxt = document.createTextNode(meleeMinionsOwned);
-	//appending items together
-	buyMinionBtn.appendChild(buyMinionTxt);
-	document.getElementById("MeleeMinionButton").appendChild(buyMinionBtn);
-	document.getElementById("MeleeMinionsText").appendChild(minionOwnedTxt);
-	document.getElementById("MeleeMinionsOwned").appendChild(minionAmtTxt);
-	//setting ID
-	buyMinionBtn.id = "buyMeleeMinion";
-	//setting onclick
-	buyMinionBtn.onclick = function(){buyMeleeMinion()};
-	//disable button
-	buyMinionBtn.disabled = (gold < meleeMinionCost) ? true:false;
+	// Create button
+	var buttonText = "Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold";
+	$('<button/>', {
+		id: 'buyMeleeMinion',
+		text: buttonText,
+		click: function() {buyMeleeMinion();},
+		disabled: function() {return (gold < meleeMinionCost) ? true:false;}
+	}).appendTo('#MeleeMinionButton')
+	// Create text
+	$('#MeleeMinionsText').text("Melee Minions Owned: ");
+	$('#MeleeMinionsOwned').text('0');
+
+	// var buyMinionBtn = document.createElement("Button");
+	// var buyMinionTxt = document.createTextNode("Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold");
+	// var minionOwnedTxt = document.createTextNode("Melee Minions Owned: ");
+	// var minionAmtTxt = document.createTextNode(meleeMinionsOwned);
+	// //appending items together
+	// buyMinionBtn.appendChild(buyMinionTxt);
+	// document.getElementById("MeleeMinionButton").appendChild(buyMinionBtn);
+	// document.getElementById("MeleeMinionsText").appendChild(minionOwnedTxt);
+	// document.getElementById("MeleeMinionsOwned").appendChild(minionAmtTxt);
+	// //setting ID
+	// buyMinionBtn.id = "buyMeleeMinion";
+	// //setting onclick
+	// buyMinionBtn.onclick = function(){buyMeleeMinion()};
+	// //disable button
+	// buyMinionBtn.disabled = (gold < meleeMinionCost) ? true:false;
 }
 
 //create element to Buy Caster Minion
