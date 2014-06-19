@@ -40,7 +40,7 @@ function killMinion() {
 	}
 }
 
-//when Buy Melee Minion Button is clicked
+//Called when Buy Melee Minion Button is clicked
 function buyMeleeMinion() {
 	if(gold >= meleeMinionCost)
 	{
@@ -51,7 +51,7 @@ function buyMeleeMinion() {
 		meleeMinionCost = baseMeleeCost * Math.pow(1.1,meleeMinionsOwned);
 		updateButtons();
 	}
-	//causes caster minions to show up
+	//Causes caster minions to show up
 	if(!buyCasterMinionBlockTrue && meleeMinionsOwned >= 2 )
 	{
 		buyCasterMinionBlockTrue = true;
@@ -59,7 +59,7 @@ function buyMeleeMinion() {
 	}
 }
 
-//when Buy Caster Minion Button is clicked
+//Called when Buy Caster Minion Button is clicked
 function buyCasterMinion() {
 	if(gold >= casterMinionCost)
 	{
@@ -70,7 +70,7 @@ function buyCasterMinion() {
 		casterMinionCost = baseCasterCost * Math.pow(1.1,casterMinionsOwned);
 		updateButtons();
 	}
-	//causes siege minions to show up
+	//Causes siege minions to show up
 	if(!buySiegeMinionBlockTrue && casterMinionsOwned >= 2)
 	{
 		buySiegeMinionBlockTrue = true;
@@ -78,7 +78,7 @@ function buyCasterMinion() {
 	}
 }
 
-//when Buy Siege Minion Button is clicked
+//Called when Buy Siege Minion Button is clicked
 function buySiegeMinion() {
 	if(gold >= siegeMinionCost)
 	{
@@ -89,10 +89,10 @@ function buySiegeMinion() {
 		siegeMinionCost = baseSiegeCost * Math.pow(1.1, siegeMinionsOwned);
 		updateButtons();
 	}
-	//causes champions to show up
+	//Causes champions to show up
 }
 
-//create element to Buy Melee Minion
+//Create element to Buy Melee Minion
 function showBuyMeleeMinion() {
 	// Create button
 	var buttonText = "Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold";
@@ -105,95 +105,56 @@ function showBuyMeleeMinion() {
 	// Create text
 	$('#MeleeMinionsText').text("Melee Minions Owned: ");
 	$('#MeleeMinionsOwned').text('0');
-
-	// var buyMinionBtn = document.createElement("Button");
-	// var buyMinionTxt = document.createTextNode("Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold");
-	// var minionOwnedTxt = document.createTextNode("Melee Minions Owned: ");
-	// var minionAmtTxt = document.createTextNode(meleeMinionsOwned);
-	// //appending items together
-	// buyMinionBtn.appendChild(buyMinionTxt);
-	// document.getElementById("MeleeMinionButton").appendChild(buyMinionBtn);
-	// document.getElementById("MeleeMinionsText").appendChild(minionOwnedTxt);
-	// document.getElementById("MeleeMinionsOwned").appendChild(minionAmtTxt);
-	// //setting ID
-	// buyMinionBtn.id = "buyMeleeMinion";
-	// //setting onclick
-	// buyMinionBtn.onclick = function(){buyMeleeMinion()};
-	// //disable button
-	// buyMinionBtn.disabled = (gold < meleeMinionCost) ? true:false;
 }
 
-//create element to Buy Caster Minion
+//Create element to Buy Caster Minion
 function showBuyCasterMinion() {
-	//creating Buttons and Text
-	var buyMinionBtn = document.createElement("Button");
-	var buyMinionTxt = document.createTextNode("Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold");
-	var minionOwnedTxt = document.createTextNode("Caster Minions Owned: ");
-	var minionAmtTxt = document.createTextNode(casterMinionsOwned);
-	//appending items together
-	buyMinionBtn.appendChild(buyMinionTxt);
-	document.getElementById("CasterMinionButton").appendChild(buyMinionBtn);
-	document.getElementById("CasterMinionsText").appendChild(minionOwnedTxt);
-	document.getElementById("CasterMinionsOwned").appendChild(minionAmtTxt);
-	//setting ID
-	buyMinionBtn.id = "buyCasterMinion";
-	//setting onclick
-	buyMinionBtn.onclick = function(){buyCasterMinion()};
-	//disable button
-	buyMinionBtn.disabled = (gold < casterMinionCost) ? true:false;
+	// Create button
+	var buttonText = "Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold";
+	$('<button/>', {
+		id: 'buyCasterMinion',
+		text: buttonText,
+		click: function() {buyCasterMinion();},
+		disabled: function() {return (gold < casterMinionCost) ? true:false;}
+	}).appendTo('#CasterMinionButton')
+	// Create text
+	$('#CasterMinionsText').text("Caster Minions Owned: ");
+	$('#CasterMinionsOwned').text('0');
 }
 
-//create element to Buy Siege Minion
+//Create element to Buy Siege Minion
 function showBuySiegeMinion() {
-	//creating Buttons and Text
-	var buyMinionBtn = document.createElement("Button");
-	var buyMinionTxt = document.createTextNode("Buy Siege Minion for " + siegeMinionCost.toFixed(0) + " gold");
-	var minionOwnedTxt = document.createTextNode("Siege Minions Owned: ");
-	var minionAmtTxt = document.createTextNode(siegeMinionsOwned);
-	//appending items together
-	buyMinionBtn.appendChild(buyMinionTxt);
-	document.getElementById("SiegeMinionButton").appendChild(buyMinionBtn);
-	document.getElementById("SiegeMinionsText").appendChild(minionOwnedTxt);
-	document.getElementById("SiegeMinionsOwned").appendChild(minionAmtTxt);
-	//setting ID
-	buyMinionBtn.id = "buySiegeMinion";
-	//setting onclick
-	buyMinionBtn.onclick = function(){buySiegeMinion()};
-	//disable button
-	buyMinionBtn.disabled = (gold < siegeMinionCost) ? true:false;
+	// Create button
+	var buttonText = "Buy Siege Minion for " + siegeMinionCost.toFixed(0) + " gold";
+	$('<button/>', {
+		id: 'buySiegeMinion',
+		text: buttonText,
+		click: function() {buySiegeMinion();},
+		disabled: function() {return (gold < siegeMinionCost) ? true:false;}
+	}).appendTo('#SiegeMinionButton')
+	// Create text
+	$('#SiegeMinionsText').text("Siege Minions Owned: ");
+	$('#SiegeMinionsOwned').text('0');
 }
 
 function updateButtons() {
 	// Update Melee Minion Button
-	
 	if (buyMeleeMinionBlockTrue)
 	{
-		document.getElementById("buyMeleeMinion").innerHTML = "Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold";
-		document.getElementById("buyMeleeMinion").disabled = (gold < meleeMinionCost) ? true:false;
-		/*if (gold >= meleeMinionCost)
-			document.getElementById("buyMeleeMinion").disabled = false;
-		else
-			document.getElementById("buyMeleeMinion").disabled = true;*/
+		$("#buyMeleeMinion").text("Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold");
+		$("#buyMeleeMinion").attr("disabled", (gold < meleeMinionCost) ? true:false);
 	}
 	// Update Caster Minion Button
 	if (buyCasterMinionBlockTrue)
 	{
-		document.getElementById("buyCasterMinion").innerHTML = "Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold";
-		document.getElementById("buyCasterMinion").disabled = (gold < casterMinionCost) ? true:false;
-		/*if (gold >= casterMinionCost)
-			document.getElementById("buyCasterMinion").disabled = false;
-		else
-			document.getElementById("buyCasterMinion").disabled = true;*/
+		$("#buyCasterMinion").text("Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold");
+		$("#buyCasterMinion").attr("disabled", (gold < casterMinionCost) ? true:false);
 	}
 	// Update Siege Minion Button
 	if (buySiegeMinionBlockTrue)
 	{
-		document.getElementById("buySiegeMinion").innerHTML = "Buy Siege Minion for " + siegeMinionCost.toFixed(0) + " gold";
-		document.getElementById("buySiegeMinion").disabled = (gold < siegeMinionCost) ? true:false;
-		/*if (gold >= siegeMinionCost)
-			document.getElementById("buySiegeMinion").disabled = false;
-		else
-			document.getElementById("buySiegeMinion").disabled = true;*/
+		$("#buySiegeMinion").text("Buy Siege Minion for " + siegeMinionCost.toFixed(0) + " gold");
+		$("#buySiegeMinion").attr("disabled", (gold < siegeMinionCost) ? true:false);
 	}
 }
 
@@ -201,20 +162,15 @@ function incrementGold() {
 	gold += meleeMinionsOwned*meleeMinionProduction;
 	gold += casterMinionsOwned*casterMinionProduction;
 	gold += siegeMinionsOwned*siegeMinionProduction;
-    document.getElementById("Gold").innerHTML = gold.toFixed(1);
+	$("#Gold").text(gold.toFixed(1));
 }
 
+// Allows switching between tabs
 function tab(tab) {
-	document.getElementById('tab1').style.display = 'none';
-	document.getElementById('tab2').style.display = 'none';
-	document.getElementById('tab3').style.display = 'none';
-	document.getElementById('tab4').style.display = 'none';
-	document.getElementById('li_tab1').setAttribute("class", "");
-	document.getElementById('li_tab2').setAttribute("class", "");
-	document.getElementById('li_tab3').setAttribute("class", "");
-	document.getElementById('li_tab4').setAttribute("class", "");
-	document.getElementById(tab).style.display = 'block';
-	document.getElementById('li_'+tab).setAttribute("class", "active");
+	$('#Content_Area > div').hide();
+	$('#tabs > ul:first-of-type > li').removeClass();
+	$('#' + tab).show();
+	$('#li_' + tab).addClass('active');
 }
 
 //Debug function
