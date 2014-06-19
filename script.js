@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 
 //Variables
-var myVar = setInterval(function(){incrementGold();updateButtons()},1000);
+var myVar = setInterval(function(){incrementGold()},1000);
 var gold = 0;
 //minions
 var minionsKilled = 0;
@@ -212,25 +212,25 @@ function updateButtons() {
 	if (buyMeleeMinionBlockTrue)
 	{
 		$("#buyMeleeMinion").text("Buy Melee Minion for " + minionData[minionEnum.MELEE].minionCost.toFixed(0) + " gold");
-		$("#buyMeleeMinion").attr("disabled", (gold < minionData[minionEnum.MELEE].minionCost) ? true:false);
+		$("#buyMeleeMinion").attr("disabled", (gold.toFixed(1) < minionData[minionEnum.MELEE].minionCost) ? true:false);
 	}
 	// Update Caster Minion Button
 	if (buyCasterMinionBlockTrue)
 	{
 		$("#buyCasterMinion").text("Buy Caster Minion for " + minionData[minionEnum.CASTER].minionCost.toFixed(0) + " gold");
-		$("#buyCasterMinion").attr("disabled", (gold < minionData[minionEnum.CASTER].minionCost) ? true:false);
+		$("#buyCasterMinion").attr("disabled", (gold.toFixed(1) < minionData[minionEnum.CASTER].minionCost) ? true:false);
 	}
 	// Update Siege Minion Button
 	if (buySiegeMinionBlockTrue)
 	{
 		$("#buySiegeMinion").text("Buy Siege Minion for " + minionData[minionEnum.SIEGE].minionCost.toFixed(0) + " gold");
-		$("#buySiegeMinion").attr("disabled", (gold < minionData[minionEnum.SIEGE].minionCost) ? true:false);
+		$("#buySiegeMinion").attr("disabled", (gold.toFixed(1) < minionData[minionEnum.SIEGE].minionCost) ? true:false);
 	}
 	// Update Buy Champion Button
 	if (buyChampionBlockTrue)
 	{
 		$("#buyChampion").text("Buy Champion for " + championCost.toFixed(0) + " gold");
-		$("#buyChampion").attr("disabled", (gold < championCost) ? true:false);
+		$("#buyChampion").attr("disabled", (gold.toFixed(1) < championCost) ? true:false);
 	}
 }
 
@@ -239,6 +239,7 @@ function incrementGold() {
 	gold += minionData[minionEnum.CASTER].minionsOwned*minionData[minionEnum.CASTER].minionProduction;
 	gold += minionData[minionEnum.SIEGE].minionsOwned*minionData[minionEnum.SIEGE].minionProduction;
 	$("#Gold").text(gold.toFixed(1));
+	updateButtons();
 }
 
 // Allows switching between tabs
