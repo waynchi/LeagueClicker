@@ -36,7 +36,7 @@ var minionData = [{
 		buttonClickFunction: function() {buyCasterMinion();},
 		buttonSpanId: '#CasterMinionButton',
 		textSpanId: '#CasterMinionsText',
-		ownedSpanId: '#CasterMinionOwned',
+		ownedSpanId: '#CasterMinionsOwned',
 		minionsOwned: 0,
 		baseCost: 50,
 		minionCost: 50,
@@ -47,7 +47,7 @@ var minionData = [{
 		buttonClickFunction: function() {buySiegeMinion();},
 		buttonSpanId: '#SiegeMinionButton',
 		textSpanId: '#SiegeMinionsText',
-		ownedSpanId: 'SiegeMinionOwned',
+		ownedSpanId: 'SiegeMinionsOwned',
 		minionsOwned: 0,
 		baseCost: 200,
 		minionCost: 200,
@@ -131,7 +131,7 @@ function buyCasterMinion() {
 		minionData[minionEnum.CASTER].minionsOwned += 1;
 		gold -= minionData[minionEnum.CASTER].minionCost;
 		$("#Gold").text(gold.toFixed(1));
-		$("#CasterMinionOwned").text(minionData[minionEnum.CASTER].minionsOwned);
+		$("#CasterMinionsOwned").text(minionData[minionEnum.CASTER].minionsOwned);
 		minionData[minionEnum.CASTER].minionCost = minionData[minionEnum.CASTER].baseCost * Math.pow(1.1,minionData[minionEnum.CASTER].minionsOwned);
 		updateButtons();
 	}
@@ -150,7 +150,7 @@ function buySiegeMinion() {
 		minionData[minionEnum.SIEGE].minionsOwned += 1;
 		gold -= minionData[minionEnum.SIEGE].minionCost;
 		$("#Gold").text(gold.toFixed(1));
-		$("#SiegeMinionOwned").text(minionData[minionEnum.SIEGE].minionsOwned);
+		$("#SiegeMinionsOwned").text(minionData[minionEnum.SIEGE].minionsOwned);
 		minionData[minionEnum.SIEGE].minionCost = minionData[minionEnum.SIEGE].baseCost * Math.pow(1.1, minionData[minionEnum.SIEGE].minionsOwned);
 		updateButtons();
 	}
@@ -232,6 +232,7 @@ function updateButtons() {
 		$("#buyChampion").text("Buy Champion for " + championCost.toFixed(0) + " gold");
 		$("#buyChampion").attr("disabled", (gold < championCost) ? true:false);
 	}
+	console.log(gold);
 }
 
 function incrementGold() {
@@ -239,6 +240,7 @@ function incrementGold() {
 	gold += minionData[minionEnum.CASTER].minionsOwned*minionData[minionEnum.CASTER].minionProduction;
 	gold += minionData[minionEnum.SIEGE].minionsOwned*minionData[minionEnum.SIEGE].minionProduction;
 	$("#Gold").text(gold.toFixed(1));
+	console.log(gold);
 }
 
 // Allows switching between tabs
