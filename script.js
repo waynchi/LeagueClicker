@@ -9,6 +9,42 @@ var gold = 0;
 //minions
 var minionsKilled = 0;
 var minionKillGold = 1;
+
+var minionEnum = {
+	MELEE: 0,
+	CASTER: 1,
+	SIEGE: 2
+}
+
+var minionData = [{
+		name: "Melee Minion",
+		buttonIdText: 'buyMeleeMinion',
+		buttonClickFunction: function() {buyMeleeMinion();},
+		buttonSpanId: '#MeleeMinionButton',
+		textSpanId: '#MeleeMinionsText',
+		ownedSpanId: '#MeleeMinionsOwned',
+		minionsOwned: 0,
+		baseCost: 10,
+		minionCost: 10,
+		minionProduction: 0.1,
+	}, {
+		name: "Caster Minion",
+		buttonIdText: 'buyCasterMinion',
+		buttonClickFunction: function() {buyCasterMinion();},
+		minionsOwned: 0,
+		baseCost: 50,
+		minionCost: 50,
+		minionProduction: 0.7,
+	},{
+		name: "Siege Minion",
+		buttonIdText: 'buySiegeMinion',
+		buttonClickFunction: function() {buySiegeMinion();},
+		minionsOwned: 0,
+		baseCost: 200,
+		minionCost: 200,
+		minionProduction: 5,
+	}]
+
 //melee minions
 var meleeMinionsOwned = 0;
 var baseMeleeCost = 10;
@@ -140,6 +176,13 @@ function showKillMinion() {
 	$('#MinionsKilledCount').text('0');
 }
 	
+// UNFINISHED
+function showMinionBlock(minionType) {
+	console.log(minionType);
+	var buttonText = "Buy " + minionData[minionType].name + " for " + 
+		minionData[minionType].minionCost + " gold";
+}
+
 
 //Create element to Buy Melee Minion
 function showBuyMeleeMinion() {
