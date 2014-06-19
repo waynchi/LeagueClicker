@@ -55,6 +55,8 @@ function buyChampion() {
 	if(championsOwned == 0)
 	{
 		championCost = 0;
+		$("#buyChampion").remove();
+		buyChampionBlockTrue = false;
 	}
 	if(gold >= championCost)
 	{
@@ -123,7 +125,26 @@ function buySiegeMinion() {
 		updateButtons();
 	}
 	//Causes champions to show up
+	if(!buyChampionBlockTrue && siegeMinionsOwned >= 2)
+	{
+		buyChampionBlockTrue = true;
+		showBuyChampion();
+	}
 }
+
+//Create element to Buy Champion
+function showBuyChampion() {
+	//Create Button
+	var buttonText = "Buy Champion for " + championCost.toFixed(0) + " gold";
+	$('<button/>', {
+		id: 'buyChampion',
+		text: buttonText,
+		click: function() {buyChampion();},
+		disabled: (gold < championCost) ? true:false
+	}).appendTo('#buyChampionButton')
+}
+		
+		
 
 //Create element to Kill Minion
 function showKillMinion() {
@@ -149,7 +170,7 @@ function showBuyMeleeMinion() {
 		id: 'buyMeleeMinion',
 		text: buttonText,
 		click: function() {buyMeleeMinion();},
-		disabled: function() {return (gold < meleeMinionCost) ? true:false;}
+		disabled: (gold < meleeMinionCost) ? true:false
 	}).appendTo('#MeleeMinionButton')
 	// Create text
 	$('#MeleeMinionsText').text("Melee Minions Owned: ");
@@ -164,7 +185,7 @@ function showBuyCasterMinion() {
 		id: 'buyCasterMinion',
 		text: buttonText,
 		click: function() {buyCasterMinion();},
-		disabled: function() {return (gold < casterMinionCost) ? true:false;}
+		disabled: (gold < casterMinionCost) ? true:false
 	}).appendTo('#CasterMinionButton')
 	// Create text
 	$('#CasterMinionsText').text("Caster Minions Owned: ");
@@ -179,7 +200,7 @@ function showBuySiegeMinion() {
 		id: 'buySiegeMinion',
 		text: buttonText,
 		click: function() {buySiegeMinion();},
-		disabled: function() {return (gold < siegeMinionCost) ? true:false;}
+		disabled: (gold < siegeMinionCost) ? true:false
 	}).appendTo('#SiegeMinionButton')
 	// Create text
 	$('#SiegeMinionsText').text("Siege Minions Owned: ");
@@ -208,9 +229,8 @@ function updateButtons() {
 	// Update Buy Champion Button
 	if (buyChampionBlockTrue)
 	{
-		$("#buyChampionButton").text("Buy Champion for " + championCost.toFixed(0) + " gold");
-		console.log(championCost);
-		$("#buyChampionButton").attr("disabled", (gold < championCost) ? true:false);
+		$("#buyChampion").text("Buy Champion for " + championCost.toFixed(0) + " gold");
+		$("#buyChampion").attr("disabled", (gold < championCost) ? true:false);
 	}
 }
 
