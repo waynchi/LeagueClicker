@@ -97,9 +97,9 @@ function buyChampion() {
 		championsOwned ++;
 		gold -= championCost;
 		$("#Gold").text(gold.toFixed(1));
-		//$("#
 		//for later when we implement individual champs
 		championCost = baseChampionCost * Math.pow(championsOwned,2);
+		updateButtons();
 		if(!killMinionBlockTrue)
 		{
 			showKillMinion();
@@ -251,6 +251,9 @@ function updateButtons() {
 	// Update Buy Champion Button
 	if (buyChampionBlockTrue)
 	{
+		$("#buyChampionButton").text("Buy Champion for " + championCost.toFixed(0) + " gold");
+		console.log(championCost);
+		$("#buyChampionButton").attr("disabled", (gold < championCost) ? true:false);
 	}
 }
 
