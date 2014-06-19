@@ -1,7 +1,10 @@
 //Initialization
 $(document).ready(function() {
 	tab('tab1'); // switch to first tab
+	$('#buyChampion').click(buyChampion);
 });
+
+
 
 //Variables
 var myVar = setInterval(function(){incrementGold();updateButtons()},1000);
@@ -26,23 +29,29 @@ var minionData = [{
 		minionsOwned: 0,
 		baseCost: 10,
 		minionCost: 10,
-		minionProduction: 0.1,
+		minionProduction: 0.1
 	}, {
 		name: "Caster Minion",
 		buttonIdText: 'buyCasterMinion',
 		buttonClickFunction: function() {buyCasterMinion();},
+		buttonSpanId: '#CasterMinionButton',
+		textSpanId: '#CasterMinionsText',
+		ownedSpanId: '#CasterMinionsOwned',
 		minionsOwned: 0,
 		baseCost: 50,
 		minionCost: 50,
-		minionProduction: 0.7,
-	},{
+		minionProduction: 0.7
+	}, {
 		name: "Siege Minion",
 		buttonIdText: 'buySiegeMinion',
 		buttonClickFunction: function() {buySiegeMinion();},
+		buttonSpanId: '#SiegeMinionButton',
+		textSpanId: '#SiegeMinionsText',
+		ownedSpanId: '#SiegeMinionsOwned',
 		minionsOwned: 0,
 		baseCost: 200,
 		minionCost: 200,
-		minionProduction: 5,
+		minionProduction: 5
 	}]
 
 //melee minions
@@ -82,11 +91,11 @@ function killMinion() {
 	if(!buyMeleeMinionBlockTrue && minionsKilled >= 10)
 	{	
 		buyMeleeMinionBlockTrue = true;
-		showBuyMeleeMinion();
+		showMinionBlock(minionEnum.MELEE);
 	}
 }
 
-//Called when Buy A Champion
+//Called when Buy A Champion is clicked
 function buyChampion() {
 	if(championsOwned == 0)
 	{
@@ -124,7 +133,7 @@ function buyMeleeMinion() {
 	if(!buyCasterMinionBlockTrue && meleeMinionsOwned >= 2 )
 	{
 		buyCasterMinionBlockTrue = true;
-		showBuyCasterMinion();
+		showMinionBlock(minionEnum.CASTER);
 	}
 }
 
@@ -143,7 +152,7 @@ function buyCasterMinion() {
 	if(!buySiegeMinionBlockTrue && casterMinionsOwned >= 2)
 	{
 		buySiegeMinionBlockTrue = true;
-		showBuySiegeMinion();
+		showMinionBlock(minionEnum.SIEGE);
 	}
 }
 
@@ -176,57 +185,20 @@ function showKillMinion() {
 	$('#MinionsKilledCount').text('0');
 }
 	
-// UNFINISHED
+// Shows Buy Minion Blocks
 function showMinionBlock(minionType) {
 	console.log(minionType);
 	var buttonText = "Buy " + minionData[minionType].name + " for " + 
 		minionData[minionType].minionCost + " gold";
-}
-
-
-//Create element to Buy Melee Minion
-function showBuyMeleeMinion() {
-	// Create button
-	var buttonText = "Buy Melee Minion for " + meleeMinionCost.toFixed(0) + " gold";
 	$('<button/>', {
-		id: 'buyMeleeMinion',
+		id: minionData[minionType].buttonIdText,
 		text: buttonText,
-		click: function() {buyMeleeMinion();},
-		disabled: function() {return (gold < meleeMinionCost) ? true:false;}
-	}).appendTo('#MeleeMinionButton')
+		click: minionData[minionType].buttonClickFunction,
+		disabled: function() {return (gold < minionData[minionType].minionCost) ? true:false;}
+	}).appendTo(minionData[minionType].buttonSpanId)
 	// Create text
-	$('#MeleeMinionsText').text("Melee Minions Owned: ");
-	$('#MeleeMinionsOwned').text('0');
-}
-
-//Create element to Buy Caster Minion
-function showBuyCasterMinion() {
-	// Create button
-	var buttonText = "Buy Caster Minion for " + casterMinionCost.toFixed(0) + " gold";
-	$('<button/>', {
-		id: 'buyCasterMinion',
-		text: buttonText,
-		click: function() {buyCasterMinion();},
-		disabled: function() {return (gold < casterMinionCost) ? true:false;}
-	}).appendTo('#CasterMinionButton')
-	// Create text
-	$('#CasterMinionsText').text("Caster Minions Owned: ");
-	$('#CasterMinionsOwned').text('0');
-}
-
-//Create element to Buy Siege Minion
-function showBuySiegeMinion() {
-	// Create button
-	var buttonText = "Buy Siege Minion for " + siegeMinionCost.toFixed(0) + " gold";
-	$('<button/>', {
-		id: 'buySiegeMinion',
-		text: buttonText,
-		click: function() {buySiegeMinion();},
-		disabled: function() {return (gold < siegeMinionCost) ? true:false;}
-	}).appendTo('#SiegeMinionButton')
-	// Create text
-	$('#SiegeMinionsText').text("Siege Minions Owned: ");
-	$('#SiegeMinionsOwned').text('0');
+	$(minionData[minionType].textSpanId).text(minionData[minionType].name + "s Owned: ");
+	$(minionData[minionType].ownedSpanId).text('0');
 }
 
 function updateButtons() {
@@ -251,9 +223,9 @@ function updateButtons() {
 	// Update Buy Champion Button
 	if (buyChampionBlockTrue)
 	{
-		$("#buyChampionButton").text("Buy Champion for " + championCost.toFixed(0) + " gold");
-		console.log(championCost);
-		$("#buyChampionButton").attr("disabled", (gold < championCost) ? true:false);
+		$("#buyChampion").text("Buy Champion for " + championCost.toFixed(0) + " gold");
+		//console.log(championCost);
+		$("#buyChampion").attr("disabled", (gold < championCost) ? true:false);
 	}
 }
 
