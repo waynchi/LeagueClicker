@@ -79,12 +79,26 @@ var championList = [{
 //Owned Champion List
 var ownedChampionList = new Array();
 
+//Upgrade List
+//First Upgrades
+var firstUpgradeList = [{
+	name: "Teamwork",
+	buttonClickFunction: function () {teamwork();}
+	} , {
+	name: "Inhibitor"
+	buttonClickFunction: function() {inhibitor(); }
+	}, {
+	name: "Advanced PCM"
+	buttonClickFunction: function() {advancePCM();}
+	}]
+
 //Variables that see if Element has been created
 var buyChampionBlockTrue = true;
 var killMinionBlockTrue = false;
 var buyMeleeMinionBlockTrue = false;
 var buyCasterMinionBlockTrue = false;
 var buySiegeMinionBlockTrue = false;
+var buyFirstUpgradeBlockTrue = false;
 
 function killMinion() {
 	minionsKilled += 1;
@@ -126,13 +140,17 @@ function buyChampion() {
 		delete championList[championList.indexOf(tempChamp)];
 		championList.sort();
 		championList.length--;
-		console.log(championList.length);
 		championCost = baseChampionCost * Math.pow(championsOwned,2);
 		updateButtons();
 		if(!killMinionBlockTrue)
 		{
 			showKillMinion();
 			killMinionBlockTrue = !killMinionBlockTrue;
+		}
+		if(!buyFirstUpgradeBlockTrue && ownedChampionList.length == 2)
+		{
+			buyFirstUpgradeBlockTrue = true;
+			showFirstUpgrades();
 		}
 	}
 	
@@ -193,6 +211,11 @@ function buySiegeMinion() {
 		buyChampionBlockTrue = true;
 		showBuyChampion();
 	}
+}
+
+//Create Element to Buy First Set of Upgrades
+function showFirstUpgrades() {
+	for  
 }
 
 //Create element to Buy Champion
