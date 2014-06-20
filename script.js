@@ -58,7 +58,26 @@ var minionData = [{
 var championsOwned = 0;
 var baseChampionCost = 1000;
 var championCost = 0;
-
+//champion array list (currently testing 10)
+var championList = [{
+	name: "Ashe",
+	type: "Ranged",
+	skill: "Hawkshot"
+	}, {
+	name: "Teemo",
+	type: "Ranged",
+	skill: "Satan"
+	}, {
+	name: "Jax",
+	type: "Melee",
+	skill: "Champ"
+	}, {
+	name: "Riven",
+	type: "Melee",
+	skill: "Wings"
+	}]
+//Owned Champion List
+var ownedChampionList = new Array();
 
 //Variables that see if Element has been created
 var buyChampionBlockTrue = true;
@@ -93,7 +112,15 @@ function buyChampion() {
 		championsOwned ++;
 		gold -= championCost;
 		$("#Gold").text(gold.toFixed(1));
-		//for later when we implement individual champs
+		//adding the champion to the list
+		var length = championList.length;
+		var tempChamp = championList[Math.floor(Math.random()*length)];
+		ownedChampionList.push(tempChamp);
+		$("<li></li>", {
+			id: tempChamp.name,
+			class: 'champion',
+			text: tempChamp.name
+		}).appendTo("#ChampionList")
 		championCost = baseChampionCost * Math.pow(championsOwned,2);
 		updateButtons();
 		if(!killMinionBlockTrue)

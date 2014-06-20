@@ -7,6 +7,10 @@ h1 {
 	cursor: pointer;
 }
 
+.champion{
+	list-style-type: none;
+}
+
 .tabs {
     text-align: center;
 }
