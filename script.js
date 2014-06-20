@@ -83,14 +83,22 @@ var ownedChampionList = new Array();
 //First Upgrades
 var firstUpgradeList = [{
 	name: "Teamwork",
+	id: "teamwork",
 	buttonClickFunction: function () {teamwork();}
 	} , {
 	name: "Inhibitor",
+	id: "inhibitor",
 	buttonClickFunction: function() {inhibitor(); }
 	}, {
 	name: "Advanced PCM",
-	buttonClickFunction: function() {advancePCM();}
+	id: "advancedPCM",
+	buttonClickFunction: function() {advancedPCM();}
 	}]
+	
+//First Upgrades available
+var teamworkOwned = false;
+var inhibitorOwned = false;
+var advancedPCMOwned = false;
 
 //Variables that see if Element has been created
 var buyChampionBlockTrue = true;
@@ -111,6 +119,23 @@ function killMinion() {
 		buyMeleeMinionBlockTrue = true;
 		showMinionBlock(minionEnum.MELEE);
 	}
+}
+
+//UPGRADES
+//buying Teamwork
+function teamwork() {
+	teamworkOwned = true;
+	$('#teamwork').remove();
+}
+
+function inhibitor() {
+	inhibitorOwned = true;
+	$('#inhibitor').remove();
+}
+
+function advancedPCM() {
+	advancedPCMOwned = true;
+	$('#advancedPCM').remove();
 }
 
 //Called when Buy A Champion is clicked
@@ -223,7 +248,7 @@ function showFirstUpgrades() {
 		}).appendTo('#UpgradeList')
 		
 		$("<button/>", {
-			id: value.name,
+			id: value.id,
 			text: value.name,
 			click: value.buttonClickFunction,
 			disabled: false
