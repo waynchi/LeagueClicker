@@ -115,12 +115,18 @@ function buyChampion() {
 		//adding the champion to the list
 		var length = championList.length;
 		var tempChamp = championList[Math.floor(Math.random()*length)];
+		//adding champion to owned
 		ownedChampionList.push(tempChamp);
 		$("<li></li>", {
 			id: tempChamp.name,
 			class: 'champion',
 			text: tempChamp.name
 		}).appendTo("#ChampionList")
+		//deleting champion from available
+		delete championList[championList.indexOf(tempChamp)];
+		championList.sort();
+		championList.length--;
+		console.log(championList.length);
 		championCost = baseChampionCost * Math.pow(championsOwned,2);
 		updateButtons();
 		if(!killMinionBlockTrue)
@@ -257,7 +263,7 @@ function updateButtons() {
 	if (buyChampionBlockTrue)
 	{
 		$("#buyChampion").text("Buy Champion for " + championCost.toFixed(0) + " gold");
-		$("#buyChampion").attr("disabled", (gold.toFixed(1) < championCost) ? true:false);
+		$("#buyChampion").attr("disabled", ((gold.toFixed(1) < championCost) || championList.length == 0) ? true:false);
 	}
 }
 
@@ -284,4 +290,11 @@ function wut()
 		incrementGold();
 		updateButtons();
 	};
+}
+
+function give()
+{
+	gold += 100000000;
+	updateButtons();
+	incrementGold();
 }
