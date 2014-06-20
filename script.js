@@ -85,10 +85,10 @@ var firstUpgradeList = [{
 	name: "Teamwork",
 	buttonClickFunction: function () {teamwork();}
 	} , {
-	name: "Inhibitor"
+	name: "Inhibitor",
 	buttonClickFunction: function() {inhibitor(); }
 	}, {
-	name: "Advanced PCM"
+	name: "Advanced PCM",
 	buttonClickFunction: function() {advancePCM();}
 	}]
 
@@ -215,7 +215,20 @@ function buySiegeMinion() {
 
 //Create Element to Buy First Set of Upgrades
 function showFirstUpgrades() {
-	for  
+	jQuery.each(firstUpgradeList, function(index,value) {
+		var listID = "upgrade" + index;
+		$("<li></li>", {
+			id: listID,
+			class: "upgrade"
+		}).appendTo('#UpgradeList')
+		
+		$("<button/>", {
+			id: value.name,
+			text: value.name,
+			click: value.buttonClickFunction,
+			disabled: false
+		}).appendTo('#upgrade' + index)
+	});
 }
 
 //Create element to Buy Champion
