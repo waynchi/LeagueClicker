@@ -92,7 +92,7 @@ var firstUpgradeList = [{
 	buttonClickFunction: function() {inhibitor(); },
 	owned: false,
 	detail: "Destroy an inhibitor. Gain the ability to create Super Minions",
-	ability: function() {return 0}
+	ability: function() {return minionData[2].minionsOwned*minionData[2].minionProduction*0.5}
 	}, {
 	name: "Advanced CM",
 	id: "advancedCM",
@@ -134,6 +134,9 @@ function teamwork() {
 function inhibitor() {
 	firstUpgradeList[1].owned = true;
 	updateGoldPS();
+	minionData[2].name = "Super Minion";
+	$(minionData[2].textSpanId).text(minionData[2].name + "s Owned: ");
+	updateButtons();
 	$('#inhibitor').remove();
 }
 
@@ -319,19 +322,19 @@ function updateButtons() {
 	// Update Melee Minion Button
 	if (buyMeleeMinionBlockTrue)
 	{
-		$("#buyMeleeMinion").text("Buy Melee Minion for " + minionData[minionEnum.MELEE].minionCost.toFixed(0) + " gold");
+		$("#buyMeleeMinion").text("Buy " + minionData[0].name + " for " + minionData[minionEnum.MELEE].minionCost.toFixed(0) + " gold");
 		$("#buyMeleeMinion").attr("disabled", (gold.toFixed(1) < minionData[minionEnum.MELEE].minionCost) ? true:false);
 	}
 	// Update Caster Minion Button
 	if (buyCasterMinionBlockTrue)
 	{
-		$("#buyCasterMinion").text("Buy Caster Minion for " + minionData[minionEnum.CASTER].minionCost.toFixed(0) + " gold");
+		$("#buyCasterMinion").text("Buy " + minionData[1].name + " for " + minionData[minionEnum.CASTER].minionCost.toFixed(0) + " gold");
 		$("#buyCasterMinion").attr("disabled", (gold.toFixed(1) < minionData[minionEnum.CASTER].minionCost) ? true:false);
 	}
 	// Update Siege Minion Button
 	if (buySiegeMinionBlockTrue)
 	{
-		$("#buySiegeMinion").text("Buy Siege Minion for " + minionData[minionEnum.SIEGE].minionCost.toFixed(0) + " gold");
+		$("#buySiegeMinion").text("Buy " + minionData[2].name + " for " + minionData[minionEnum.SIEGE].minionCost.toFixed(0) + " gold");
 		$("#buySiegeMinion").attr("disabled", (gold.toFixed(1) < minionData[minionEnum.SIEGE].minionCost) ? true:false);
 	}
 	// Update Buy Champion Button
