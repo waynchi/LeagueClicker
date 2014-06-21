@@ -10,11 +10,6 @@ h1 {
     border-radius: 4px;
 }
 
-#minion:hover {
-	opacity: 0.5;
-	cursor: pointer;
-}
-
 .champion{
 	list-style-type: none;
 }
