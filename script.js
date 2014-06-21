@@ -82,21 +82,25 @@ var ownedChampionList = new Array();
 var firstUpgradeList = [{
 	name: "Teamwork",
 	id: "teamwork",
-	buttonClickFunction: function () {teamwork();}
+	buttonClickFunction: function () {teamwork();},
+	owned: false,
+	detail: "Your minions work as a team. For each melee and caster minion pair, gain additional gold income",
+	ability: function() {return (Math.min(minionData[0].minionsOwned, minionData[1].minionsOwned)*0.1)}
 	} , {
 	name: "Inhibitor",
 	id: "inhibitor",
-	buttonClickFunction: function() {inhibitor(); }
+	buttonClickFunction: function() {inhibitor(); },
+	owned: false,
+	detail: "Destroy an inhibitor. Gain the ability to create Super Minions",
+	ability: function() {return 0}
 	}, {
-	name: "Advanced PCM",
-	id: "advancedPCM",
-	buttonClickFunction: function() {advancedPCM();}
+	name: "Advanced CM",
+	id: "advancedCM",
+	buttonClickFunction: function() {advancedCM();},
+	owned: false,
+	detail: "Power ups your Caster Minions. They kill faster and, as a result, generate more gold",
+	ability: function() {return (minionData[1].minionsOwned)*(minionData[1].minionProduction)*0.1}
 	}]
-	
-//First Upgrades available
-var teamworkOwned = false;
-var inhibitorOwned = false;
-var advancedPCMOwned = false;
 
 //Variables that see if Element has been created
 var buyChampionBlockTrue = true;
@@ -122,18 +126,21 @@ function killMinion() {
 //UPGRADES
 //buying Teamwork
 function teamwork() {
-	teamworkOwned = true;
+	firstUpgradeList[0].owned = true;
+	updateGoldPS();
 	$('#teamwork').remove();
 }
 
 function inhibitor() {
-	inhibitorOwned = true;
+	firstUpgradeList[1].owned = true;
+	updateGoldPS();
 	$('#inhibitor').remove();
 }
 
-function advancedPCM() {
-	advancedPCMOwned = true;
-	$('#advancedPCM').remove();
+function advancedCM() {
+	firstUpgradeList[2].owned = true;
+	updateGoldPS();
+	$('#advancedCM').remove();
 }
 
 //Called when Buy A Champion is clicked
@@ -346,6 +353,13 @@ function updateGoldPS() {
 	for (var i = 0; i < arrayLength; i++) {
 		goldPerSecond += minionData[i].minionsOwned*minionData[i].minionProduction;
 	}
+	jQuery.each(firstUpgradeList, function(index , value)
+	{
+		if(value.owned)
+		{
+			goldPerSecond += value.ability();
+		}
+	})
 	$("#GoldPS").text(goldPerSecond.toFixed(1));
 	return goldPerSecond;
 }
@@ -366,6 +380,7 @@ function wut()
 		incrementGold();
 		updateButtons();
 	};
+	return 0;
 }
 
 function give()
@@ -373,4 +388,5 @@ function give()
 	gold += 100000000;
 	updateButtons();
 	incrementGold();
+	return 0;
 }
