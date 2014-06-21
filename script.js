@@ -4,8 +4,6 @@ $(document).ready(function() {
 	$('#buyChampion').click(buyChampion);
 });
 
-
-
 //Variables
 var myVar = setInterval(function(){incrementGold()},1000);
 var gold = 0;
@@ -145,6 +143,9 @@ function buyChampion() {
 		championCost = 0;
 		$("#buyChampion").remove();
 		buyChampionBlockTrue = false;
+		$("#tabs").show();
+		$("#li_tab1").show();
+		$("#li_tab4").show();
 	}
 	if(gold >= championCost)
 	{
@@ -176,6 +177,7 @@ function buyChampion() {
 		{
 			buyFirstUpgradeBlockTrue = true;
 			showFirstUpgrades();
+			$("#li_tab2").show();
 		}
 	}
 	
@@ -191,6 +193,7 @@ function buyMeleeMinion() {
 		$("#MeleeMinionsOwned").text(minionData[minionEnum.MELEE].minionsOwned);
 		minionData[minionEnum.MELEE].minionCost = minionData[minionEnum.MELEE].baseCost * Math.pow(1.1,minionData[minionEnum.MELEE].minionsOwned);
 		updateButtons();
+		updateGoldPS();
 	}
 	//Causes caster minions to show up
 	if(!buyCasterMinionBlockTrue && minionData[minionEnum.MELEE].minionsOwned >= 2 )
@@ -210,6 +213,7 @@ function buyCasterMinion() {
 		$("#CasterMinionsOwned").text(minionData[minionEnum.CASTER].minionsOwned);
 		minionData[minionEnum.CASTER].minionCost = minionData[minionEnum.CASTER].baseCost * Math.pow(1.1,minionData[minionEnum.CASTER].minionsOwned);
 		updateButtons();
+		updateGoldPS();
 	}
 	//Causes siege minions to show up
 	if(!buySiegeMinionBlockTrue && minionData[minionEnum.CASTER].minionsOwned >= 2)
@@ -229,6 +233,7 @@ function buySiegeMinion() {
 		$("#SiegeMinionsOwned").text(minionData[minionEnum.SIEGE].minionsOwned);
 		minionData[minionEnum.SIEGE].minionCost = minionData[minionEnum.SIEGE].baseCost * Math.pow(1.1, minionData[minionEnum.SIEGE].minionsOwned);
 		updateButtons();
+		updateGoldPS();
 	}
 	//Causes champions to show up
 	if(!buyChampionBlockTrue && minionData[minionEnum.SIEGE].minionsOwned >= 2)
@@ -329,10 +334,19 @@ function updateButtons() {
 }
 
 function incrementGold() {
-	gold += minionData[minionEnum.MELEE].minionsOwned*minionData[minionEnum.MELEE].minionProduction;
-	gold += minionData[minionEnum.CASTER].minionsOwned*minionData[minionEnum.CASTER].minionProduction;
-	gold += minionData[minionEnum.SIEGE].minionsOwned*minionData[minionEnum.SIEGE].minionProduction;
+	gold += updateGoldPS();
 	$("#Gold").text(gold.toFixed(1));
+}
+
+function updateGoldPS() {
+	var arrayLength = minionData.length;
+	var goldPerSecond = 0;
+	for (var i = 0; i < arrayLength; i++) {
+		goldPerSecond += minionData[i].minionsOwned*minionData[i].minionProduction;
+	}
+	console.log(goldPerSecond);
+	$("#GoldPS").text(goldPerSecond.toFixed(1));
+	return goldPerSecond;
 }
 
 // Allows switching between tabs
