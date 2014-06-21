@@ -146,6 +146,7 @@ function buyChampion() {
 		$("#tabs").show();
 		$("#li_tab1").show();
 		$("#li_tab4").show();
+		$("#GoldContentArea").show();
 	}
 	if(gold >= championCost)
 	{
@@ -194,6 +195,7 @@ function buyMeleeMinion() {
 		minionData[minionEnum.MELEE].minionCost = minionData[minionEnum.MELEE].baseCost * Math.pow(1.1,minionData[minionEnum.MELEE].minionsOwned);
 		updateButtons();
 		updateGoldPS();
+		$("#GoldPSContentArea").show();
 	}
 	//Causes caster minions to show up
 	if(!buyCasterMinionBlockTrue && minionData[minionEnum.MELEE].minionsOwned >= 2 )
@@ -344,7 +346,6 @@ function updateGoldPS() {
 	for (var i = 0; i < arrayLength; i++) {
 		goldPerSecond += minionData[i].minionsOwned*minionData[i].minionProduction;
 	}
-	console.log(goldPerSecond);
 	$("#GoldPS").text(goldPerSecond.toFixed(1));
 	return goldPerSecond;
 }
