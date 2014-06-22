@@ -142,8 +142,11 @@ function gameStart() {
 		gold = gameState.pop();
 		minionsKilled = gameState.pop();
 		minionKillGold = gameState.pop();
-		minionData = JSON.parse(gameState.pop());
+		//Strange bug. Need to fix eventually.
+		minionData = JSON.parse(gameState[3]);
 		console.log(minionData);
+		gameState.pop();
+		//End of bug
 		championsOwned = gameState.pop();
 		championCost = gameState.pop();
 		championList = JSON.parse(gameState.pop());
@@ -198,6 +201,7 @@ function saveData() {
 	saveFile.push(gold);
 	saveFile.push(minionsKilled);
 	saveFile.push(minionKillGold);
+	console.log(JSON.parse(JSON.stringify(minionData)));
 	saveFile.push(JSON.stringify(minionData));
 	saveFile.push(championsOwned);
 	saveFile.push(championCost);
