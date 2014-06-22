@@ -138,15 +138,12 @@ function gameStart() {
 	var gameState = restoreState();
 	if(gameState)
 	{
+		gameState.reverse();
 		console.log(gameState);
 		gold = gameState.pop();
 		minionsKilled = gameState.pop();
 		minionKillGold = gameState.pop();
-		//Strange bug. Need to fix eventually.
-		minionData = JSON.parse(gameState[3]);
-		console.log(minionData);
-		gameState.pop();
-		//End of bug
+		minionData = JSON.parse(gameState.pop());
 		championsOwned = gameState.pop();
 		championCost = gameState.pop();
 		championList = JSON.parse(gameState.pop());
@@ -174,15 +171,21 @@ function gameStart() {
 			showBuyChampion();}
 		if(killMinionBlockTrue){
 			alert("minion");
+			if(!buyChampionBlockTrue)
+			{
+				$("#GoldContentArea").show();
+			}
 			showKillMinion();}
 		if(buyMeleeMinionBlockTrue){
-			showMinionBlock(0);}
+			showMinionBlock(minionEnum.MELEE);
+			$("#GoldPSContentArea").show();}
 		if(buyCasterMinionBlockTrue){
-			showMinionBlock(1);}
+			showMinionBlock(minionEnum.CASTER);}
 		if(buySiegeMinionBlockTrue){
-			showMinionBlock(2);}
+			showMinionBlock(minionEnum.SIEGE);}
 		if(buyFirstUpgradeBlockTrue){
 			showFirstUpgrades();}
+		updateButtons();
 	}
 }
 
