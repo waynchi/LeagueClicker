@@ -110,6 +110,110 @@ var buyCasterMinionBlockTrue = false;
 var buySiegeMinionBlockTrue = false;
 var buyFirstUpgradeBlockTrue = false;
 
+
+//JSON save storage array
+var saveFile = [];
+	
+
+
+//SAVING
+//gameStart();
+
+//HTML 5 DOM SAVE
+function saveState(state) { 
+    window.localStorage.setItem("gameState", JSON.stringify(state)); 
+} 
+ 
+function restoreState() { 
+    var state = window.localStorage.getItem("gameState"); 
+    if (state) { 
+        return JSON.parse(state); 
+    } else { 
+        return null; 
+    } 
+}
+
+//Triggers at the start of the game
+function gameStart() {
+	var gameState = restoreState();
+	if(gameState)
+	{
+		console.log(gameState);
+		gold = gameState.pop();
+		minionsKilled = gameState.pop();
+		minionKillGold = gameState.pop();
+		minionData = JSON.parse(gameState.pop());
+		console.log(minionData);
+		championsOwned = gameState.pop();
+		championCost = gameState.pop();
+		championList = JSON.parse(gameState.pop());
+		console.log(championList);
+		ownedChampionList = JSON.parse(gameState.pop());
+		console.log(ownedChampionList);
+		firstUpgradeList = JSON.parse(gameState.pop());
+		console.log(firstUpgradeList);
+		buyChampionBlockTrue = gameState.pop();
+		killMinionBlockTrue = gameState.pop();
+		buyMeleeMinionBlockTrue = gameState.pop();
+		buyCasterMinionBlockTrue = gameState.pop();
+		buySiegeMinionBlockTrue = gameState.pop();
+		buyFirstUpgradeBlockTrue = gameState.pop();
+		if(buyChampionBlockTrue){
+			alert("champ");
+			championCost = 0;
+			$("#buyChampion").remove();
+			buyChampionBlockTrue = false;
+			$("#tabs").show();
+			$("#li_tab1").show();
+			$("#li_tab4").show();
+			$("#GoldContentArea").show();
+			//updateButtons();
+			showBuyChampion();}
+		if(killMinionBlockTrue){
+			alert("minion");
+			showKillMinion();}
+		if(buyMeleeMinionBlockTrue){
+			showMinionBlock(0);}
+		if(buyCasterMinionBlockTrue){
+			showMinionBlock(1);}
+		if(buySiegeMinionBlockTrue){
+			showMinionBlock(2);}
+		if(buyFirstUpgradeBlockTrue){
+			showFirstUpgrades();}
+	}
+}
+
+//Used to clear HTML 5 DOM save
+function clear() {
+	window.localStorage.clear();
+}
+
+//When the save game Button Is Pressed
+function saveData() {
+	//empty the array
+	while(saveFile.length > 0)
+	{
+		saveFile.pop();
+	}
+	saveFile.push(gold);
+	saveFile.push(minionsKilled);
+	saveFile.push(minionKillGold);
+	saveFile.push(JSON.stringify(minionData));
+	saveFile.push(championsOwned);
+	saveFile.push(championCost);
+	saveFile.push(JSON.stringify(championList));
+	saveFile.push(JSON.stringify(ownedChampionList));
+	saveFile.push(JSON.stringify(firstUpgradeList));
+	saveFile.push(buyChampionBlockTrue);
+	saveFile.push(killMinionBlockTrue);
+	saveFile.push(buyMeleeMinionBlockTrue);
+	saveFile.push(buyCasterMinionBlockTrue);
+	saveFile.push(buySiegeMinionBlockTrue);
+	saveFile.push(buyFirstUpgradeBlockTrue);
+}	
+
+
+
 function killMinion() {
 	minionsKilled += 1;
 	gold += minionKillGold;
