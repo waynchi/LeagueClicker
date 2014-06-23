@@ -103,7 +103,7 @@ var firstUpgradeList = [{
 	}]
 
 //Variables that see if Element has been created
-var buyChampionBlockTrue = true;
+var buyChampionBlockTrue = false;
 var killMinionBlockTrue = false;
 var buyMeleeMinionBlockTrue = false;
 var buyCasterMinionBlockTrue = false;
@@ -147,22 +147,19 @@ function gameStart() {
 		championsOwned = gameState.pop();
 		championCost = gameState.pop();
 		championList = JSON.parse(gameState.pop());
-		console.log(championList);
 		ownedChampionList = JSON.parse(gameState.pop());
-		console.log(ownedChampionList);
 		firstUpgradeList = JSON.parse(gameState.pop());
-		console.log(firstUpgradeList);
 		buyChampionBlockTrue = gameState.pop();
 		killMinionBlockTrue = gameState.pop();
 		buyMeleeMinionBlockTrue = gameState.pop();
 		buyCasterMinionBlockTrue = gameState.pop();
 		buySiegeMinionBlockTrue = gameState.pop();
 		buyFirstUpgradeBlockTrue = gameState.pop();
+		if(championsOwned > 0)
+		{
+			$("buyChampion").remove();
+		}
 		if(buyChampionBlockTrue){
-			alert("champ");
-			championCost = 0;
-			$("#buyChampion").remove();
-			buyChampionBlockTrue = false;
 			$("#tabs").show();
 			$("#li_tab1").show();
 			$("#li_tab4").show();
@@ -170,7 +167,6 @@ function gameStart() {
 			//updateButtons();
 			showBuyChampion();}
 		if(killMinionBlockTrue){
-			alert("minion");
 			if(!buyChampionBlockTrue)
 			{
 				$("#GoldContentArea").show();
@@ -204,7 +200,6 @@ function saveData() {
 	saveFile.push(gold);
 	saveFile.push(minionsKilled);
 	saveFile.push(minionKillGold);
-	console.log(JSON.parse(JSON.stringify(minionData)));
 	saveFile.push(JSON.stringify(minionData));
 	saveFile.push(championsOwned);
 	saveFile.push(championCost);
@@ -426,7 +421,7 @@ function showMinionBlock(minionType) {
 	}).appendTo(minionData[minionType].buttonSpanId)
 	// Create text
 	$(minionData[minionType].textSpanId).text(minionData[minionType].name + "s Owned: ");
-	$(minionData[minionType].ownedSpanId).text('0');
+	$(minionData[minionType].ownedSpanId).text(minionData[minionType].owned);
 }
 
 function updateButtons() {
