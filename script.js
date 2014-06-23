@@ -144,6 +144,9 @@ function gameStart() {
 		minionsKilled = gameState.pop();
 		minionKillGold = gameState.pop();
 		minionData = JSON.parse(gameState.pop());
+		minionData[minionEnum.MELEE].buttonClickFunction = function() {buyMeleeMinion()};
+		minionData[minionEnum.CASTER].buttonClickFunction = function() {buyCasterMinion()};
+		minionData[minionEnum.SIEGE].buttonClickFunction = function() {buySiegeMinion()};
 		championsOwned = gameState.pop();
 		championCost = gameState.pop();
 		championList = JSON.parse(gameState.pop());
@@ -454,6 +457,7 @@ function updateButtons() {
 function incrementGold() {
 	gold += updateGoldPS();
 	$("#Gold").text(gold.toFixed(1));
+	updateButtons();
 }
 
 function updateGoldPS() {
