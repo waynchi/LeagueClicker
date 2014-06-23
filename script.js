@@ -157,7 +157,7 @@ function gameStart() {
 		buyFirstUpgradeBlockTrue = gameState.pop();
 		if(championsOwned > 0)
 		{
-			$("buyChampion").remove();
+			$("#buyChampion").remove();
 		}
 		if(buyChampionBlockTrue){
 			$("#tabs").show();
@@ -405,7 +405,7 @@ function showKillMinion() {
 	}).appendTo('#KillMinionButton')
 	//create text
 	$('#KillMinionText').text("Minions Killed: ");
-	$('#MinionsKilledCount').text('0');
+	$('#MinionsKilledCount').text(minionsKilled);
 }
 	
 // Shows Buy Minion Blocks
@@ -421,7 +421,7 @@ function showMinionBlock(minionType) {
 	}).appendTo(minionData[minionType].buttonSpanId)
 	// Create text
 	$(minionData[minionType].textSpanId).text(minionData[minionType].name + "s Owned: ");
-	$(minionData[minionType].ownedSpanId).text(minionData[minionType].owned);
+	$(minionData[minionType].ownedSpanId).text(minionData[minionType].minionsOwned);
 }
 
 function updateButtons() {
