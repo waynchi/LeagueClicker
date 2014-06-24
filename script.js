@@ -241,6 +241,7 @@ function teamwork() {
 	firstUpgradeList[0].owned = true;
 	updateGoldPS();
 	$('#teamwork').remove();
+	$('#teamworkDetail').remove();
 }
 
 function inhibitor() {
@@ -250,12 +251,14 @@ function inhibitor() {
 	$(minionData[2].textSpanId).text(minionData[2].name + "s Owned: ");
 	updateButtons();
 	$('#inhibitor').remove();
+	$('#inhibitorDetail').remove();
 }
 
 function advancedCM() {
 	firstUpgradeList[2].owned = true;
 	updateGoldPS();
 	$('#advancedCM').remove();
+	$('#advancedCMDetail').remove();
 }
 
 //Called when Buy A Champion is clicked
@@ -390,14 +393,20 @@ function showFirstUpgrades() {
 		$("<li></li>", {
 			id: listID,
 			class: "upgrade"
-		}).appendTo('#UpgradeList')
+		}).appendTo('#UpgradeList');
 		
 		$("<button/>", {
 			id: value.id,
 			text: value.name,
 			click: value.buttonClickFunction,
 			disabled: false
-		}).appendTo('#upgrade' + index)
+		}).appendTo('#upgrade' + index);
+
+		$('<span/>', {
+			id: value.id + "Detail",
+			class: 'UpgradeDetails',
+			text: value.detail
+		}).appendTo('#upgrade' + index);
 	});
 }
 
