@@ -2,9 +2,9 @@
 $(document).ready(function() {
 	tab('tab1'); // switch to first tab
 	$('#buyChampion').click(buyChampion);
-	$('#SaveGameButton').click(function() {saveData();saveState(saveFile);});
-	$('#LoadGameButton').click(gameStart);
-	$('#ResetGameButton').click(function() {clear()});
+/*	$('#SaveGameButton').click(function() {saveData();saveState(saveFile);});
+	$('#LoadGameButton').click(gameStart);*/
+	$('#clearButton').click(function() {clear()});
 });
 
 //Variables
@@ -129,12 +129,15 @@ $( window ).load(function() {
 //HTML 5 DOM SAVE
 function saveState(state) { 
     window.localStorage.setItem("gameState", JSON.stringify(state)); 
+	console.log("save");
 } 
  
 function restoreState() { 
     var state = window.localStorage.getItem("gameState"); 
+	console.log("restore");
     if (state) { 
         return JSON.parse(state); 
+		console.log("found save");
     } else { 
         return null; 
     } 
@@ -158,7 +161,10 @@ function gameStart() {
 		championCost = gameState.pop();
 		championList = JSON.parse(gameState.pop());
 		ownedChampionList = JSON.parse(gameState.pop());
-		firstUpgradeList = JSON.parse(gameState.pop());
+		var tempFirstUpgradeList = JSON.parse(gameState.pop());
+		jQuery.each(firstUpgradeList, function(index,value) {
+			value.owned = tempFirstUpgradeList[index].owned;
+		})
 		buyChampionBlockTrue = gameState.pop();
 		killMinionBlockTrue = gameState.pop();
 		buyMeleeMinionBlockTrue = gameState.pop();
@@ -191,7 +197,14 @@ function gameStart() {
 			showMinionBlock(minionEnum.SIEGE);}
 		if(buyFirstUpgradeBlockTrue){
 			showFirstUpgrades();
-			$("#li_tab2").show();}
+			$("#li_tab2").show();
+			jQuery.each(firstUpgradeList, function(index,value) {
+				if(value.owned)
+				{
+					value.buttonClickFunction();
+				}
+			})
+		}
 		if(ownedChampionList.length != 0)
 		{
 			jQuery.each(ownedChampionList, function(index,value){
@@ -227,6 +240,7 @@ function gameStart() {
 //Used to clear HTML 5 DOM save
 function clear() {
 	window.localStorage.clear();
+	
 }
 
 //When the save game Button Is Pressed
