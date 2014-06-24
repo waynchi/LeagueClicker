@@ -277,11 +277,18 @@ function buyChampion() {
 		var tempChamp = championList[Math.floor(Math.random()*length)];
 		//adding champion to owned
 		ownedChampionList.push(tempChamp);
-		$("<li></li>", {
+		var list = $("<li></li>", {
 			id: tempChamp.name,
 			class: 'champion',
-			text: tempChamp.name
 		}).appendTo("#ChampionList")
+		$("<img/>", {
+			class: 'championImage',
+			src: 'img/' + tempChamp.name + '.png'
+		}).appendTo('#' + tempChamp.name)
+		$("<span/>" ,{
+			class: 'championText',
+			text: tempChamp.name
+		}).appendTo('#' + tempChamp.name)
 		//deleting champion from available
 		delete championList[championList.indexOf(tempChamp)];
 		championList.sort();

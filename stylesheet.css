@@ -106,6 +106,18 @@ h1 {
     margin: 2%;
 }
 
+.championImage {
+    height: 60px;
+    width: 60px;
+}
+
+.championText {
+    vertical-align: middle;
+    position: absolute;
+    line-height: 60px;
+    margin: 0 2% 0 2%;
+}
+
 #footer {
     height: 35px;
     background-color: white;
