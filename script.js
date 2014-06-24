@@ -191,7 +191,7 @@ function gameStart() {
 			showMinionBlock(minionEnum.SIEGE);}
 		if(buyFirstUpgradeBlockTrue){
 			showFirstUpgrades();
-			$("li_tab2").show();}
+			$("#li_tab2").show();}
 		if(ownedChampionList.length != 0)
 		{
 			jQuery.each(ownedChampionList, function(index,value){
@@ -218,7 +218,6 @@ function gameStart() {
 				tr.append(img).append(text).append(type).append(skill);	
 			})
 		}
-			
 		updateButtons();
 		$("#Gold").text(gold.toFixed(1));
 		updateGoldPS();
@@ -443,12 +442,12 @@ function showFirstUpgrades() {
 				click: value.buttonClickFunction,
 				disabled: false
 			}).appendTo('#upgrade' + index)
+			$('<span/>', {
+				id: value.id + "Detail",
+				class: 'UpgradeDetails',
+				text: value.detail
+			}).appendTo('#upgrade' + index);
 		}
-		$('<span/>', {
-			id: value.id + "Detail",
-			class: 'UpgradeDetails',
-			text: value.detail
-		}).appendTo('#upgrade' + index);
 	});
 }
 
