@@ -1,5 +1,6 @@
 h1 {
 	text-align: center;
+    font-size: 50px;
 }
 
 #mainContentArea {
@@ -8,6 +9,7 @@ h1 {
     background-color: #EDF1FA;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 1.2em;
 }
 
 .champion{
@@ -91,19 +93,51 @@ h1 {
     position: relative;
     top: 31px;
     z-index: 1;
-    height: 500px;
     background: #EDF1FA;
     border: 1px solid #ccc;
     box-shadow: 0px 0px 1px #ccc;
 }
 
 .contentList {
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-align: left;
 }
 
 .contentList li {
     margin: 2%;
+}
+
+.championImage {
+    height: 60px;
+    width: 60px;
+}
+
+.championText {
+    vertical-align: middle;
+    line-height: 60px;
+}
+
+#championList {
+    width: 100%;
+    margin-top: 2%;
+}
+
+#firstChampionRow > td {
+    padding-bottom: 2%;
+    text-decoration: underline;
+}
+
+.champion > td {
+    width: 30%;
+}
+
+.champion > td:first-child {
+    text-align: center;
+    width: 10%;
+}
+
+.UpgradeDetails {
+    padding-left: 20px;
 }
 
 #footer {

@@ -2,6 +2,9 @@
 $(document).ready(function() {
 	tab('tab1'); // switch to first tab
 	$('#buyChampion').click(buyChampion);
+	$('#SaveGameButton').click(function() {saveData();saveState(saveFile);});
+	$('#LoadGameButton').click(gameStart);
+	$('#ResetGameButton').click(function() {clear()});
 });
 
 //Variables
@@ -245,6 +248,7 @@ function teamwork() {
 	firstUpgradeList[0].owned = true;
 	updateGoldPS();
 	$('#teamwork').remove();
+	$('#teamworkDetail').remove();
 }
 
 function inhibitor() {
@@ -254,12 +258,14 @@ function inhibitor() {
 	$(minionData[2].textSpanId).text(minionData[2].name + "s Owned: ");
 	updateButtons();
 	$('#inhibitor').remove();
+	$('#inhibitorDetail').remove();
 }
 
 function advancedCM() {
 	firstUpgradeList[2].owned = true;
 	updateGoldPS();
 	$('#advancedCM').remove();
+	$('#advancedCMDetail').remove();
 }
 
 //Called when Buy A Champion is clicked
@@ -284,11 +290,27 @@ function buyChampion() {
 		var tempChamp = championList[Math.floor(Math.random()*length)];
 		//adding champion to owned
 		ownedChampionList.push(tempChamp);
-		$("<li></li>", {
+		var tr = $("<tr></tr>", {
 			id: tempChamp.name,
 			class: 'champion',
+		}).appendTo("#ChampionList");
+		var img = $("<td/>").append($("<img/>", {
+			class: 'championImage',
+			src: 'img/' + tempChamp.name + '.png'
+		}));
+		var text = $("<td/>").append($("<span/>", {
+			class: 'championText',
 			text: tempChamp.name
-		}).appendTo("#ChampionList")
+		}));
+		var type = $("<td/>").append($("<span/>", {
+			class: 'championText',
+			text: tempChamp.type
+		}));
+		var skill = $("<td/>").append($("<span/>", {
+			class: 'championText',
+			text: tempChamp.skill
+		}));
+		tr.append(img).append(text).append(type).append(skill);
 		//deleting champion from available
 		delete championList[championList.indexOf(tempChamp)];
 		championList.sort();
@@ -389,6 +411,11 @@ function showFirstUpgrades() {
 				disabled: false
 			}).appendTo('#upgrade' + index)
 		}
+		$('<span/>', {
+			id: value.id + "Detail",
+			class: 'UpgradeDetails',
+			text: value.detail
+		}).appendTo('#upgrade' + index);
 	});
 }
 
