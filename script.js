@@ -183,7 +183,8 @@ function gameStart() {
 		if(buySiegeMinionBlockTrue){
 			showMinionBlock(minionEnum.SIEGE);}
 		if(buyFirstUpgradeBlockTrue){
-			showFirstUpgrades();}
+			showFirstUpgrades();
+			$("li_tab2").show();}
 		updateButtons();
 	}
 }
@@ -216,6 +217,12 @@ function saveData() {
 	saveFile.push(buySiegeMinionBlockTrue);
 	saveFile.push(buyFirstUpgradeBlockTrue);
 }	
+
+//combines saveData and saveState
+function save() {
+	saveData();
+	saveState(saveFile);
+}
 
 
 
@@ -368,17 +375,20 @@ function buySiegeMinion() {
 function showFirstUpgrades() {
 	jQuery.each(firstUpgradeList, function(index,value) {
 		var listID = "upgrade" + index;
-		$("<li></li>", {
-			id: listID,
-			class: "upgrade"
-		}).appendTo('#UpgradeList')
-		
-		$("<button/>", {
-			id: value.id,
-			text: value.name,
-			click: value.buttonClickFunction,
-			disabled: false
-		}).appendTo('#upgrade' + index)
+		if($(listID).length == 0)
+		{
+			$("<li></li>", {
+				id: listID,
+				class: "upgrade"
+			}).appendTo('#UpgradeList')
+			
+			$("<button/>", {
+				id: value.id,
+				text: value.name,
+				click: value.buttonClickFunction,
+				disabled: false
+			}).appendTo('#upgrade' + index)
+		}
 	});
 }
 
@@ -386,12 +396,15 @@ function showFirstUpgrades() {
 function showBuyChampion() {
 	//Create Button
 	var buttonText = "Buy Champion for " + championCost.toFixed(0) + " gold";
-	$('<button/>', {
-		id: 'buyChampion',
-		text: buttonText,
-		click: function() {buyChampion();},
-		disabled: (gold < championCost) ? true:false
-	}).appendTo('#buyChampionButton')
+	if($('#buyChampion').length == 0)
+	{
+		$('<button/>', {
+			id: 'buyChampion',
+			text: buttonText,
+			click: function() {buyChampion();},
+			disabled: (gold < championCost) ? true:false
+		}).appendTo('#buyChampionButton')
+	}
 }
 		
 		
@@ -400,15 +413,19 @@ function showBuyChampion() {
 function showKillMinion() {
 	// Create Button
 	var buttonText = "Last Hit an Enemy Minion";
-	$('<button/>', {
-		id: 'minion',
-		text: buttonText,
-		click: function() {killMinion();},
-		disabled: false
-	}).appendTo('#KillMinionButton')
-	//create text
-	$('#KillMinionText').text("Minions Killed: ");
-	$('#MinionsKilledCount').text(minionsKilled);
+	console.log($('#minion').length);
+	if($('#minion').length == 0)
+	{
+		$('<button/>', {
+			id: 'minion',
+			text: buttonText,
+			click: function() {killMinion();},
+			disabled: false
+		}).appendTo('#KillMinionButton')
+		//create text
+		$('#KillMinionText').text("Minions Killed: ");
+		$('#MinionsKilledCount').text(minionsKilled);
+	}
 }
 	
 // Shows Buy Minion Blocks
@@ -416,15 +433,19 @@ function showMinionBlock(minionType) {
 	console.log(minionType);
 	var buttonText = "Buy " + minionData[minionType].name + " for " + 
 		minionData[minionType].minionCost + " gold";
-	$('<button/>', {
-		id: minionData[minionType].buttonIdText,
-		text: buttonText,
-		click: minionData[minionType].buttonClickFunction,
-		disabled: function() {return (gold < minionData[minionType].minionCost) ? true:false;}
-	}).appendTo(minionData[minionType].buttonSpanId)
-	// Create text
-	$(minionData[minionType].textSpanId).text(minionData[minionType].name + "s Owned: ");
-	$(minionData[minionType].ownedSpanId).text(minionData[minionType].minionsOwned);
+	console.log($("#"+minionData[minionType].buttonIdText).length);
+	if($("#"+minionData[minionType].buttonIdText).length == 0)
+	{
+		$('<button/>', {
+			id: minionData[minionType].buttonIdText,
+			text: buttonText,
+			click: minionData[minionType].buttonClickFunction,
+			disabled: function() {return (gold < minionData[minionType].minionCost) ? true:false;}
+		}).appendTo(minionData[minionType].buttonSpanId)
+		// Create text
+		$(minionData[minionType].textSpanId).text(minionData[minionType].name + "s Owned: ");
+		$(minionData[minionType].ownedSpanId).text(minionData[minionType].minionsOwned);
+	}
 }
 
 function updateButtons() {
