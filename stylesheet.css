@@ -91,7 +91,6 @@ h1 {
     position: relative;
     top: 31px;
     z-index: 1;
-    height: 500px;
     background: #EDF1FA;
     border: 1px solid #ccc;
     box-shadow: 0px 0px 1px #ccc;
@@ -113,9 +112,26 @@ h1 {
 
 .championText {
     vertical-align: middle;
-    position: absolute;
     line-height: 60px;
-    margin: 0 2% 0 2%;
+}
+
+#championList {
+    width: 100%;
+    margin-top: 2%;
+}
+
+#firstChampionRow > td {
+    padding-bottom: 2%;
+    text-decoration: underline;
+}
+
+.champion > td {
+    width: 30%;
+}
+
+.champion > td:first-child {
+    text-align: center;
+    width: 10%;
 }
 
 #footer {

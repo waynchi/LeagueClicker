@@ -2,6 +2,9 @@
 $(document).ready(function() {
 	tab('tab1'); // switch to first tab
 	$('#buyChampion').click(buyChampion);
+	$('#SaveGameButton').click(function() {saveData();saveState(saveFile);});
+	$('#LoadGameButton').click(gameStart);
+	$('#ResetGameButton').click(function() {clear()});
 });
 
 //Variables
@@ -277,18 +280,27 @@ function buyChampion() {
 		var tempChamp = championList[Math.floor(Math.random()*length)];
 		//adding champion to owned
 		ownedChampionList.push(tempChamp);
-		var list = $("<li></li>", {
+		var tr = $("<tr></tr>", {
 			id: tempChamp.name,
 			class: 'champion',
-		}).appendTo("#ChampionList")
-		$("<img/>", {
+		}).appendTo("#ChampionList");
+		var img = $("<td/>").append($("<img/>", {
 			class: 'championImage',
 			src: 'img/' + tempChamp.name + '.png'
-		}).appendTo('#' + tempChamp.name)
-		$("<span/>" ,{
+		}));
+		var text = $("<td/>").append($("<span/>", {
 			class: 'championText',
 			text: tempChamp.name
-		}).appendTo('#' + tempChamp.name)
+		}));
+		var type = $("<td/>").append($("<span/>", {
+			class: 'championText',
+			text: tempChamp.type
+		}));
+		var skill = $("<td/>").append($("<span/>", {
+			class: 'championText',
+			text: tempChamp.skill
+		}));
+		tr.append(img).append(text).append(type).append(skill);
 		//deleting champion from available
 		delete championList[championList.indexOf(tempChamp)];
 		championList.sort();

@@ -70,7 +70,14 @@
 		<div id="Content_Area" class="active">
 			<div id="tab1">
 				<div id="ChampionBlock">
-					<ul id ="ChampionList" class="contentList"></ul>
+					<table id ="ChampionList" class="contentList">
+						<tr id="firstChampionRow">
+							<td></td>
+							<td>Champion</td>
+							<td>Type</td>
+							<td>Skill</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 			<div id="tab2" style="display: none;">
@@ -82,7 +89,9 @@
 				<p>This is the text for Battle</p>
 			</div>
 			<div id="tab4" style="display: none;">
-				<p>This is the text for Options</p>
+				<p><button id="SaveGameButton">Save Game</button></p>
+				<p><button id="LoadGameButton">Load Game</button></p>
+				<p><button id="ResetGameButton">Clear Saved Game</button></p>
 			</div>
 		</div> <!--End of Content_Area Div -->
 	</div> <!-- End of Tabs Div -->
