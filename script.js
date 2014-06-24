@@ -122,6 +122,10 @@ var saveFile = [];
 //SAVING
 //gameStart();
 
+$( window ).load(function() {
+  gameStart();
+});
+
 //HTML 5 DOM SAVE
 function saveState(state) { 
     window.localStorage.setItem("gameState", JSON.stringify(state)); 
@@ -164,11 +168,11 @@ function gameStart() {
 		if(championsOwned > 0)
 		{
 			$("#buyChampion").remove();
-		}
-		if(buyChampionBlockTrue){
 			$("#tabs").show();
 			$("#li_tab1").show();
 			$("#li_tab4").show();
+		}
+		if(buyChampionBlockTrue){
 			$("#GoldContentArea").show();
 			//updateButtons();
 			showBuyChampion();}
@@ -188,7 +192,36 @@ function gameStart() {
 		if(buyFirstUpgradeBlockTrue){
 			showFirstUpgrades();
 			$("li_tab2").show();}
+		if(ownedChampionList.length != 0)
+		{
+			jQuery.each(ownedChampionList, function(index,value){
+				var tr = $("<tr></tr>", {
+					id: value.name,
+					class: 'champion',
+				}).appendTo("#ChampionList");
+				var img = $("<td/>").append($("<img/>", {
+					class: 'championImage',
+					src: 'img/' + value.name + '.png'
+				}));
+				var text = $("<td/>").append($("<span/>", {
+					class: 'championText',
+					text: value.name
+				}));
+				var type = $("<td/>").append($("<span/>", {
+					class: 'championText',
+					text: value.type
+				}));
+				var skill = $("<td/>").append($("<span/>", {
+					class: 'championText',
+					text: value.skill
+				}));
+				tr.append(img).append(text).append(type).append(skill);	
+			})
+		}
+			
 		updateButtons();
+		$("#Gold").text(gold.toFixed(1));
+		updateGoldPS();
 	}
 }
 
