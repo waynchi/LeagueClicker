@@ -187,7 +187,7 @@ function gameStart() {
 			showMinionBlock(minionEnum.SIEGE);}
 		if(buyFirstUpgradeBlockTrue){
 			showFirstUpgrades();
-			$("li_tab2").show();}
+			$("#li_tab2").show();}
 		updateButtons();
 	}
 }
@@ -410,12 +410,12 @@ function showFirstUpgrades() {
 				click: value.buttonClickFunction,
 				disabled: false
 			}).appendTo('#upgrade' + index)
+			$('<span/>', {
+				id: value.id + "Detail",
+				class: 'UpgradeDetails',
+				text: value.detail
+			}).appendTo('#upgrade' + index);
 		}
-		$('<span/>', {
-			id: value.id + "Detail",
-			class: 'UpgradeDetails',
-			text: value.detail
-		}).appendTo('#upgrade' + index);
 	});
 }
 
