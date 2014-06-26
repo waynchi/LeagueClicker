@@ -8,7 +8,7 @@ $(document).ready(function() {
 });
 
 //Variables
-var myVar = setInterval(function(){incrementGold()},1000);
+var myVar = setInterval(function(){incrementGold(); scheduler();},100);
 var gold = 0;
 //minions
 var minionsKilled = 0;
@@ -61,6 +61,10 @@ var baseChampionCost = 1000;
 var championCost = 0;
 //champion array list (currently testing 10)
 var championList = [{
+	name: "Annie",
+	type: "Ranged",
+	skill: "Tibbers"
+	}, {
 	name: "Ashe",
 	type: "Ranged",
 	skill: "Hawkshot"
@@ -76,7 +80,8 @@ var championList = [{
 	name: "Riven",
 	type: "Melee",
 	skill: "Wings"
-	}]
+	}
+	]
 //Owned Champion List
 var ownedChampionList = new Array();
 
@@ -159,6 +164,7 @@ function gameStart() {
 		minionData[minionEnum.SIEGE].buttonClickFunction = function() {buySiegeMinion()};
 		championsOwned = gameState.pop();
 		championCost = gameState.pop();
+		//May need to change how this works depending on whether or not updates will be available
 		championList = JSON.parse(gameState.pop());
 		ownedChampionList = JSON.parse(gameState.pop());
 		var tempFirstUpgradeList = JSON.parse(gameState.pop());
@@ -548,6 +554,13 @@ function updateButtons() {
 	}
 }
 
+function scheduler() {
+	if(ownedChampionList.length >= 5 )
+	{
+		$("#li_tab3").show();
+	}
+	
+}
 function incrementGold() {
 	gold += updateGoldPS();
 	$("#Gold").text(gold.toFixed(1));
