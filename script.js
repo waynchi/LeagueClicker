@@ -369,7 +369,7 @@ function buyChampion() {
 		championList.length--;
 		championCost = baseChampionCost * Math.pow(championsOwned,2);
 		updateButtons();
-		if(!killMinionBlockTrue)
+		/* if(!killMinionBlockTrue)
 		{
 			showKillMinion();
 			killMinionBlockTrue = !killMinionBlockTrue;
@@ -379,7 +379,7 @@ function buyChampion() {
 			buyFirstUpgradeBlockTrue = true;
 			showFirstUpgrades();
 			$("#li_tab2").show();
-		}
+		} */
 	}
 	
 }
@@ -398,11 +398,11 @@ function buyMeleeMinion() {
 		$("#GoldPSContentArea").show();
 	}
 	//Causes caster minions to show up
-	if(!buyCasterMinionBlockTrue && minionData[minionEnum.MELEE].minionsOwned >= 2 )
+	/* if(!buyCasterMinionBlockTrue && minionData[minionEnum.MELEE].minionsOwned >= 2 )
 	{
 		buyCasterMinionBlockTrue = true;
 		showMinionBlock(minionEnum.CASTER);
-	}
+	} */
 }
 
 //Called when Buy Caster Minion Button is clicked
@@ -418,11 +418,11 @@ function buyCasterMinion() {
 		updateGoldPS();
 	}
 	//Causes siege minions to show up
-	if(!buySiegeMinionBlockTrue && minionData[minionEnum.CASTER].minionsOwned >= 2)
+	/* if(!buySiegeMinionBlockTrue && minionData[minionEnum.CASTER].minionsOwned >= 2)
 	{
 		buySiegeMinionBlockTrue = true;
 		showMinionBlock(minionEnum.SIEGE);
-	}
+	} */
 }
 
 //Called when Buy Siege Minion Button is clicked
@@ -577,6 +577,32 @@ function scheduler() {
 	if(ownedChampionList.length >= 5 )
 	{
 		$("#li_tab3").show();
+	}
+	if(ownedChampionList.length == 1 && !killMinionBlockTrue)
+	{
+		showKillMinion();
+		killMinionBlockTrue = !killMinionBlockTrue;
+	}
+	if(!buyFirstUpgradeBlockTrue && ownedChampionList.length == 2)
+	{
+		buyFirstUpgradeBlockTrue = true;
+		showFirstUpgrades();
+		$("#li_tab2").show();
+	}
+	if(!buyCasterMinionBlockTrue && minionData[minionEnum.MELEE].minionsOwned >= 2 )
+	{
+		buyCasterMinionBlockTrue = true;
+		showMinionBlock(minionEnum.CASTER);
+	}
+	if(!buySiegeMinionBlockTrue && minionData[minionEnum.CASTER].minionsOwned >= 2)
+	{
+		buySiegeMinionBlockTrue = true;
+		showMinionBlock(minionEnum.SIEGE);
+	}
+	if(!buyChampionBlockTrue && minionData[minionEnum.SIEGE].minionsOwned >= 2)
+	{
+		buyChampionBlockTrue = true;
+		showBuyChampion();
 	}
 	
 }
