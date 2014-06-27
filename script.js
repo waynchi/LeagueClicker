@@ -564,11 +564,13 @@ function updateButtons() {
 		$("#buyChampion").attr("disabled", ((gold.toFixed(1) < championCost) || championList.length == 0) ? true:false);
 	}
 	// Update Buy Upgrade Buttons
-	jQuery.each(firstUpgradeList, function(index, value) {
-	  //iterate through array
-	  var upgradeButtonID = '#' + value.id + 'Button';
-	  $(upgradeButtonID).attr("disabled", ((gold.toFixed(1) < value.cost) || championList.length == 0) ? true:false);
-	});
+	if (buyFirstUpgradeBlockTrue) {
+		jQuery.each(firstUpgradeList, function(index, value) {
+	  		//iterate through array
+	 	 	var upgradeButtonID = '#' + value.id + 'Button';
+	  		$(upgradeButtonID).attr("disabled", ((gold.toFixed(1) < value.cost) || championList.length == 0) ? true:false);
+		});
+	}
 }
 
 function scheduler() {
