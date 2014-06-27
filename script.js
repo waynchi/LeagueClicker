@@ -438,17 +438,17 @@ function buySiegeMinion() {
 		updateGoldPS();
 	}
 	//Causes champions to show up
-	if(!buyChampionBlockTrue && minionData[minionEnum.SIEGE].minionsOwned >= 2)
+	/* if(!buyChampionBlockTrue && minionData[minionEnum.SIEGE].minionsOwned >= 2)
 	{
 		buyChampionBlockTrue = true;
 		showBuyChampion();
-	}
+	} */
 }
 
 //Create Element to Buy First Set of Upgrades
 function showFirstUpgrades() {
 	jQuery.each(firstUpgradeList, function(index,value) {
-		var listID = "upgrade" + index;
+		var listID = '#' + value.id;
 		if($(listID).length == 0)
 		{
 			var tr = $("<tr></tr>", {
@@ -568,37 +568,43 @@ function updateButtons() {
 		jQuery.each(firstUpgradeList, function(index, value) {
 	  		//iterate through array
 	 	 	var upgradeButtonID = '#' + value.id + 'Button';
-	  		$(upgradeButtonID).attr("disabled", ((gold.toFixed(1) < value.cost) || championList.length == 0) ? true:false);
+	  		$(upgradeButtonID).attr("disabled", ((gold.toFixed(1) < value.cost) || ownedChampionList.length == 0) ? true:false);
 		});
 	}
 }
 
 function scheduler() {
+	//Open Battle Tab
 	if(ownedChampionList.length >= 5 )
 	{
 		$("#li_tab3").show();
 	}
+	//Show Kill Minion Button
 	if(ownedChampionList.length == 1 && !killMinionBlockTrue)
 	{
 		showKillMinion();
 		killMinionBlockTrue = !killMinionBlockTrue;
 	}
+	//Show Upgrades Tab
 	if(!buyFirstUpgradeBlockTrue && ownedChampionList.length == 2)
 	{
 		buyFirstUpgradeBlockTrue = true;
 		showFirstUpgrades();
 		$("#li_tab2").show();
 	}
+	//Show Caster Minion Button
 	if(!buyCasterMinionBlockTrue && minionData[minionEnum.MELEE].minionsOwned >= 2 )
 	{
 		buyCasterMinionBlockTrue = true;
 		showMinionBlock(minionEnum.CASTER);
 	}
+	//Show Siege Minion Button
 	if(!buySiegeMinionBlockTrue && minionData[minionEnum.CASTER].minionsOwned >= 2)
 	{
 		buySiegeMinionBlockTrue = true;
 		showMinionBlock(minionEnum.SIEGE);
 	}
+	//Show Champion Button
 	if(!buyChampionBlockTrue && minionData[minionEnum.SIEGE].minionsOwned >= 2)
 	{
 		buyChampionBlockTrue = true;
