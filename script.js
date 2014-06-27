@@ -563,9 +563,9 @@ function updateButtons() {
 		$("#buyChampion").text("Buy Champion for " + championCost.toFixed(0) + " gold");
 		$("#buyChampion").attr("disabled", ((gold.toFixed(1) < championCost) || championList.length == 0) ? true:false);
 	}
-	// Update Buy Update Buttons
+	// Update Buy Upgrade Buttons
 	jQuery.each(firstUpgradeList, function(index, value) {
-	  //iterate through array or object
+	  //iterate through array
 	  var upgradeButtonID = '#' + value.id + 'Button';
 	  $(upgradeButtonID).attr("disabled", ((gold.toFixed(1) < value.cost) || championList.length == 0) ? true:false);
 	});
