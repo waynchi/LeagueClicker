@@ -90,6 +90,7 @@ var ownedChampionList = new Array();
 var firstUpgradeList = [{
 	name: "Teamwork",
 	id: "teamwork",
+	cost: 4000,
 	buttonClickFunction: function () {teamwork();},
 	owned: false,
 	detail: "Your minions work as a team. For each melee and caster minion pair, gain additional gold income",
@@ -97,6 +98,7 @@ var firstUpgradeList = [{
 	} , {
 	name: "Inhibitor",
 	id: "inhibitor",
+	cost: 6000,
 	buttonClickFunction: function() {inhibitor(); },
 	owned: false,
 	detail: "Destroy an inhibitor. Gain the ability to create Super Minions",
@@ -104,6 +106,7 @@ var firstUpgradeList = [{
 	}, {
 	name: "Advanced CM",
 	id: "advancedCM",
+	cost: 10000,
 	buttonClickFunction: function() {advancedCM();},
 	owned: false,
 	detail: "Power ups your Caster Minions. They kill faster and, as a result, generate more gold",
@@ -300,7 +303,6 @@ function teamwork() {
 	firstUpgradeList[0].owned = true;
 	updateGoldPS();
 	$('#teamwork').remove();
-	$('#teamworkDetail').remove();
 }
 
 function inhibitor() {
@@ -310,14 +312,12 @@ function inhibitor() {
 	$(minionData[2].textSpanId).text(minionData[2].name + "s Owned: ");
 	updateButtons();
 	$('#inhibitor').remove();
-	$('#inhibitorDetail').remove();
 }
 
 function advancedCM() {
 	firstUpgradeList[2].owned = true;
 	updateGoldPS();
 	$('#advancedCM').remove();
-	$('#advancedCMDetail').remove();
 }
 
 //Called when Buy A Champion is clicked
@@ -451,22 +451,33 @@ function showFirstUpgrades() {
 		var listID = "upgrade" + index;
 		if($(listID).length == 0)
 		{
-			$("<li></li>", {
-				id: listID,
-				class: "upgrade"
-			}).appendTo('#UpgradeList')
-			
-			$("<button/>", {
+			var tr = $("<tr></tr>", {
 				id: value.id,
-				text: value.name,
+				class: "upgrade"
+			}).appendTo('#UpgradeList');
+			
+			var buttontd = $("<td/>").appendTo('#' + value.id);
+
+			buttontd.append($("<button/>", {
+				id: value.id + 'Button',
+				text: "Buy",
 				click: value.buttonClickFunction,
 				disabled: false
-			}).appendTo('#upgrade' + index)
-			$('<span/>', {
+			}));
+
+			$("<td/>", {
+				text: value.name
+			}).appendTo('#' + value.id);
+
+			$("<td/>", {
+				text: value.cost
+			}).appendTo('#' + value.id);
+
+			$('<td/>', {
 				id: value.id + "Detail",
 				class: 'UpgradeDetails',
 				text: value.detail
-			}).appendTo('#upgrade' + index);
+			}).appendTo('#' + value.id);
 		}
 	});
 }
@@ -552,6 +563,12 @@ function updateButtons() {
 		$("#buyChampion").text("Buy Champion for " + championCost.toFixed(0) + " gold");
 		$("#buyChampion").attr("disabled", ((gold.toFixed(1) < championCost) || championList.length == 0) ? true:false);
 	}
+	// Update Buy Update Buttons
+	jQuery.each(firstUpgradeList, function(index, value) {
+	  //iterate through array or object
+	  var upgradeButtonID = '#' + value.id + 'Button';
+	  $(upgradeButtonID).attr("disabled", ((gold.toFixed(1) < value.cost) || championList.length == 0) ? true:false);
+	});
 }
 
 function scheduler() {
@@ -561,12 +578,16 @@ function scheduler() {
 	}
 	
 }
+
+// Called every second (100 ms for debugging purposes)
 function incrementGold() {
 	gold += updateGoldPS();
-	$("#Gold").text(gold.toFixed(1));
+	gold = Math.round(gold * 10) / 10; // rounds to nearest tenth
+	$("#Gold").text(gold.toFixed(1)); // converts to string with one decimal digit
 	updateButtons();
 }
 
+// Updates and returns gold generated per second
 function updateGoldPS() {
 	var arrayLength = minionData.length;
 	var goldPerSecond = 0;

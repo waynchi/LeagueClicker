@@ -136,8 +136,34 @@ h1 {
     width: 10%;
 }
 
-.UpgradeDetails {
-    padding-left: 20px;
+#UpgradeList {
+    width: 100%;
+    margin-top: 2%;
+}
+
+#firstUpgradeRow > td {
+    text-decoration: underline;
+}
+
+#UpgradeList td {
+    padding-bottom: 1%;
+}
+
+#UpgradeList td:first-child {
+    width: 10%;
+    text-align: center;
+}
+
+#UpgradeList td:nth-child(2) {
+    width: 10%;
+}
+
+#UpgradeList td:nth-child(3) {
+    width: 10%;
+}
+
+#UpgradeList td:nth-child(4) {
+    width: 70%;
 }
 
 #footer {
