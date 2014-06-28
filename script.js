@@ -538,6 +538,9 @@ function showMinionBlock(minionType) {
 	}
 }
 
+//Enter Battle
+function enterBattle() {
+}
 function updateButtons() {
 	// Update Melee Minion Button
 	if (buyMeleeMinionBlockTrue)
@@ -572,6 +575,7 @@ function updateButtons() {
 		});
 	}
 }
+
 
 function scheduler() {
 	//Open Battle Tab
@@ -610,7 +614,18 @@ function scheduler() {
 		buyChampionBlockTrue = true;
 		showBuyChampion();
 	}
-	
+	//Updates Battle Dropdown Selector
+	jQuery.each(ownedChampionList, function(index,value) {
+		var optionID = '#' + value.name + 'Option';
+		if($(optionID).length == 0)
+		{
+			console.log("TEST2");
+			$('<option></option>', {
+				id: value.name + 'Option',
+				text: value.name
+			}).appendTo('#battleSelect')
+		}
+	})
 }
 
 // Called every second (100 ms for debugging purposes)
