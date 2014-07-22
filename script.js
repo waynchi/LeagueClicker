@@ -617,13 +617,23 @@ function scheduler() {
 	//Updates Battle Dropdown Selector
 	jQuery.each(ownedChampionList, function(index,value) {
 		var optionID = '#' + value.name + 'Option';
+		var buttonID = '#' + value.name + 'Button';
 		if($(optionID).length == 0)
 		{
 			console.log("TEST2");
-			$('<option></option>', {
+			$('<span></span>', {
 				id: value.name + 'Option',
-				text: value.name
+				//text: value.name
 			}).appendTo('#battleSelect')
+			$('<button></button>', {
+				id: value.name + 'Button',
+				class: 'championImage'  //change this to it's own thing later
+				//src: 'img/' + value.name + '.png'
+			}).appendTo(optionID);
+			$('<img></img>', {
+				class: 'championImage',
+				src: 'img/' + value.name + '.png'
+			}).appendTo(buttonID);
 		}
 	})
 }
