@@ -121,6 +121,9 @@ var buyCasterMinionBlockTrue = false;
 var buySiegeMinionBlockTrue = false;
 var buyFirstUpgradeBlockTrue = false;
 
+//Variable that stores champions in a Summoner's Rift Battle
+var battlingChampions = [];
+
 
 //JSON save storage array
 var saveFile = [];
@@ -538,6 +541,45 @@ function showMinionBlock(minionType) {
 	}
 }
 
+//Putting Champions into Queue
+function addChampionToQueue(champion) {
+	var buttonID = '#' + champion.name + 'Button';
+	$(buttonID).remove();
+	$('<button></button>', {
+		id: champion.name + 'Button',
+		class: 'championButton',  //change this to it's own thing later
+		click: function() {removeChampionFromQueue(champion);}
+	}).appendTo('#championsInQueue');
+	$('<img></img>', {
+		class: 'championImage',
+		src: 'img/' + champion.name + '.png'
+	}).appendTo(buttonID);
+	
+	battlingChampions.push(champion);
+}
+
+//Removing Champions from Queue
+function removeChampionFromQueue(champion) {
+	var buttonID = '#' + champion.name + 'Button';
+	var optionID = '#' + champion.name + 'Option';
+	$(buttonID).remove();
+	$('<button></button>', {
+		id: champion.name + 'Button',
+		class: 'championButton',
+		click: function() {addChampionToQueue(champion);}
+	}).appendTo(optionID);
+	$('<img></img', {
+		class: 'championImage',
+		src: 'img/' + champion.name + '.png'
+	}).appendTo(buttonID);
+	
+	jQuery.each(battlingChampions, function(index, value) {
+		if(value.name == champion.name)
+		{
+			battlingChampions.splice(index,1);
+		}
+	});
+}
 //Enter Battle
 function enterBattle() {
 }
@@ -627,7 +669,8 @@ function scheduler() {
 			}).appendTo('#battleSelect')
 			$('<button></button>', {
 				id: value.name + 'Button',
-				class: 'championImage'  //change this to it's own thing later
+				class: 'championButton',  //change this to it's own thing later
+				click: function() {addChampionToQueue(value);}
 				//src: 'img/' + value.name + '.png'
 			}).appendTo(optionID);
 			$('<img></img>', {
@@ -635,7 +678,7 @@ function scheduler() {
 				src: 'img/' + value.name + '.png'
 			}).appendTo(buttonID);
 		}
-	})
+	});
 }
 
 // Called every second (100 ms for debugging purposes)
