@@ -65,7 +65,8 @@
 			<li id="li_tab1" onclick="tab('tab1')" style="display: none;"><a>Champions</a></li>
 			<li id="li_tab2" onclick="tab('tab2')" style="display: none;"><a>Upgrades</a></li>
 			<li id="li_tab3" onclick="tab('tab3')" style="display: none;"><a>Battle</a></li>
-			<li id="li_tab4" onclick="tab('tab4')" style="display: none;"><a>Options</a></li>
+			<li id="li_tab4" onclick="tab('tab4')" style="display: none;"><a>Statistics</a></li>
+			<li id="li_tab5" onclick="tab('tab5')" style="display: none;"><a>Options</a></li>
 		</ul>
 		<div id="Content_Area" class="active">
 			<div id="tab1">
@@ -99,6 +100,36 @@
 				<p id="battleSelect"> </p>
 			</div>
 			<div id="tab4" style="display: none;">
+				<div id="StatsBlock">
+					<table id ="StatsList" class="contentList">
+						<tr>
+							<td>Gold in Bank:</td>
+							<td id="StatsGold">0</td>
+						</tr>
+						<tr>
+							<td>Gold earned:</td>
+							<td id="StatsTotalGold">0</td>
+						</tr>
+						<tr>
+							<td>Gold per second:</td>
+							<td id="GoldPerSecond">0</td>
+						</tr>
+						<tr>
+							<td>Game started:</td>
+							<td id="">0 hours ago</td>
+						</tr>
+						<tr>
+							<td>Minions owned:</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>Enemy minions killed:</td>
+							<td>0</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div id="tab5" style="display: none;">
 				<p><button id="saveButton" onclick="save()">Save Data</button></p>
 				<p><button id="loadButton" onclick="gameStart()">Load Data</button></p>
 				<p><button id="clearButton" onclick="clear()">Clear Data</button></p>
