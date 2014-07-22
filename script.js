@@ -157,7 +157,7 @@ function gameStart() {
 	if(gameState)
 	{
 		gameState.reverse();
-		console.log(gameState);
+		console.log(gameState); // debugging purposes
 		gold = gameState.pop();
 		minionsKilled = gameState.pop();
 		minionKillGold = gameState.pop();
@@ -186,6 +186,7 @@ function gameStart() {
 			$("#tabs").show();
 			$("#li_tab1").show();
 			$("#li_tab4").show();
+			$("#li_tab5").show();
 		}
 		if(buyChampionBlockTrue){
 			$("#GoldContentArea").show();
@@ -330,6 +331,7 @@ function buyChampion() {
 		$("#tabs").show();
 		$("#li_tab1").show();
 		$("#li_tab4").show();
+		$("#li_tab5").show();
 		$("#GoldContentArea").show();
 	}
 	if(gold >= championCost)

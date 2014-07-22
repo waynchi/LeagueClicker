@@ -35,7 +35,7 @@ h1 {
     clear: none;
     float: left;
     height: 24px;
-    width: 25%;
+    width: 20%;
 }
 
 .tabs > ul > li > a {
@@ -164,6 +164,16 @@ h1 {
 
 #UpgradeList td:nth-child(4) {
     width: 70%;
+}
+
+#StatsList {
+    width: 60%;
+    margin: 2% 20% 2% 20%;
+    text-align: center;
+}
+
+#StatsList td {
+    width: 50%;
 }
 
 #footer {
