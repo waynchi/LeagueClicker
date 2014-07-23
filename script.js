@@ -121,11 +121,14 @@ var buyCasterMinionBlockTrue = false;
 var buySiegeMinionBlockTrue = false;
 var buyFirstUpgradeBlockTrue = false;
 
+// Variables for stats tab
+var totalGold = 0;
+var gameStarted = 0;
+var totalMinionsOwned = 0;
+var enemyTeemosKilled = 0;
 
 //JSON save storage array
 var saveFile = [];
-	
-
 
 //SAVING
 //gameStart();
@@ -580,6 +583,8 @@ function updateButtons() {
 
 
 function scheduler() {
+	//Increments gameStarted
+	gameStarted += 1 / (60 * 60 * 10);
 	//Open Battle Tab
 	if(ownedChampionList.length >= 5 )
 	{
@@ -644,6 +649,8 @@ function scheduler() {
 function incrementGold() {
 	gold += updateGoldPS();
 	gold = Math.round(gold * 10) / 10; // rounds to nearest tenth
+	totalGold += updateGoldPS();
+	totalGold = Math.round(totalGold * 10) / 10; // rounds to nearest tenth
 	$("#Gold").text(gold.toFixed(1)); // converts to string with one decimal digit
 	updateButtons();
 }
