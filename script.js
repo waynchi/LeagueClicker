@@ -69,9 +69,9 @@ var championList = [{
 	type: "Ranged",
 	skill: "Hawkshot"
 	}, {
-	name: "Teemo",
+	name: "Caitlyn",
 	type: "Ranged",
-	skill: "Satan"
+	skill: "Sniper"
 	}, {
 	name: "Jax",
 	type: "Melee",
@@ -507,16 +507,22 @@ function showBuyChampion() {
 //Create element to Kill Minion
 function showKillMinion() {
 	// Create Button
-	var buttonText = "Last Hit an Enemy Minion";
+	var buttonText = "Hit Teemo for Gold";
 	console.log($('#minion').length);
 	if($('#minion').length == 0)
 	{
 		$('<button/>', {
 			id: 'minion',
-			text: buttonText,
+			//text: buttonText,
 			click: function() {killMinion();},
 			disabled: false
-		}).appendTo('#KillMinionButton')
+		}).appendTo('#KillMinionButton');
+		$('<img></img>', {
+			id: 'teemoImg',
+			src: 'img/TeemoHurt.png'
+		}).appendTo('#minion');
+		//$('#teemoImg').mousedown(function() {$('#teemoImg').attr("src", 'img/TeemoHurt.png');});
+		//$('#teemoImg').mouseup(function() {$('#teemoImg').attr("src", 'img/Teemo.png');});
 		//create text
 		$('#KillMinionText').text("Minions Killed: ");
 		$('#MinionsKilledCount').text(minionsKilled);
