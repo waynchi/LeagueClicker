@@ -122,7 +122,8 @@ var buySiegeMinionBlockTrue = false;
 var buyFirstUpgradeBlockTrue = false;
 
 // Variables for stats tab
-var totalGold = 0;
+var totalGoldEarned = 0;
+var statsGoldPerSecond = 0;
 var gameStarted = 0;
 var totalMinionsOwned = 0;
 var enemyTeemosKilled = 0;
@@ -302,6 +303,7 @@ function killMinion() {
 		buyMeleeMinionBlockTrue = true;
 		showMinionBlock(minionEnum.MELEE);
 	}
+	enemyTeemosKilled += 1;
 }
 
 //UPGRADES
@@ -404,6 +406,7 @@ function buyMeleeMinion() {
 		updateButtons();
 		updateGoldPS();
 		$("#GoldPSContentArea").show();
+		totalMinionsOwned += 1;
 	}
 	//Causes caster minions to show up
 	/* if(!buyCasterMinionBlockTrue && minionData[minionEnum.MELEE].minionsOwned >= 2 )
@@ -424,6 +427,7 @@ function buyCasterMinion() {
 		minionData[minionEnum.CASTER].minionCost = minionData[minionEnum.CASTER].baseCost * Math.pow(1.1,minionData[minionEnum.CASTER].minionsOwned);
 		updateButtons();
 		updateGoldPS();
+		totalMinionsOwned += 1;
 	}
 	//Causes siege minions to show up
 	/* if(!buySiegeMinionBlockTrue && minionData[minionEnum.CASTER].minionsOwned >= 2)
@@ -444,6 +448,7 @@ function buySiegeMinion() {
 		minionData[minionEnum.SIEGE].minionCost = minionData[minionEnum.SIEGE].baseCost * Math.pow(1.1, minionData[minionEnum.SIEGE].minionsOwned);
 		updateButtons();
 		updateGoldPS();
+		totalMinionsOwned += 1;
 	}
 	//Causes champions to show up
 	/* if(!buyChampionBlockTrue && minionData[minionEnum.SIEGE].minionsOwned >= 2)
@@ -633,6 +638,13 @@ function updateButtons() {
 function scheduler() {
 	//Increments gameStarted
 	gameStarted += 1 / (60 * 60 * 10);
+	//Updates Stats Page
+	$("#StatsGold").text(gold);
+	$("#StatsTotalGold").text(totalGoldEarned);
+	$("#StatsGoldPerSecond").text(Math.round(statsGoldPerSecond * 10) / 10);
+	$("#StatsGameStarted").text(Math.round(gameStarted * 1000) / 1000);
+	$("#StatsTotalMinionsOwned").text(totalMinionsOwned);
+	$("#StatsEnemyTeemosKilled").text(enemyTeemosKilled);
 	//Open Battle Tab
 	if(ownedChampionList.length >= 5 )
 	{
@@ -698,8 +710,8 @@ function scheduler() {
 function incrementGold() {
 	gold += updateGoldPS();
 	gold = Math.round(gold * 10) / 10; // rounds to nearest tenth
-	totalGold += updateGoldPS();
-	totalGold = Math.round(totalGold * 10) / 10; // rounds to nearest tenth
+	totalGoldEarned += updateGoldPS();
+	totalGoldEarned = Math.round(totalGoldEarned * 10) / 10; // rounds to nearest tenth
 	$("#Gold").text(gold.toFixed(1)); // converts to string with one decimal digit
 	updateButtons();
 }
@@ -719,6 +731,7 @@ function updateGoldPS() {
 		}
 	})
 	$("#GoldPS").text(goldPerSecond.toFixed(1));
+	statsGoldPerSecond = goldPerSecond;
 	return goldPerSecond;
 }
 
@@ -744,6 +757,7 @@ function wut()
 function give()
 {
 	gold += 100000000;
+	totalGoldEarned += 100000000;
 	updateButtons();
 	incrementGold();
 	return 0;
